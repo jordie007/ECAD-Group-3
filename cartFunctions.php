@@ -94,12 +94,17 @@ function updateItem() {
 		header ("Location: login.php");
 		exit;
 	}
+	
 	// TO DO 2
 	// Write code to implement: if a user clicks on "Update" button, update the database
 	// and also the session variable for counting number of items in shopping cart.
 	$cartid=$_SESSION["Cart"];
 	$pid=$_POST["product_id"];
 	$quantity=$_POST["quantity"];
+	if ($quantity<=0){
+		removeItem();
+		exit;
+	}
 	include_once("mysql_conn.php");
 	$qry="UPDATE ShopCartItem SET Quantity=? WHERE ProductID=? AND ShopCartID=?";
 	$stmt=$conn->prepare($qry);

@@ -1,6 +1,47 @@
+<style>
+	.button1{
+		border:none;
+		padding:10px;
+		font-size:15px;
+	}
+	.button1:hover{
+		color:white;
+		background-color:#f44336
+	}
+
+	.checkout-btn{
+		width:100%;
+		height:40px;
+		padding:5px;
+		font-weight:800;
+		background-color:#FFA997;
+		border-radius:5px;
+	}
+	.checkout-btn:hover{
+		background-color:#C86651;
+		color:white;
+	}
+
+	.tblContent{
+		padding-right:10px;
+		padding-top: 5px;
+		padding-bottom:5px;
+		font-weight:600;
+	}
+	.tblval{
+		float:right;
+		padding-top: 5px;
+		padding-bottom:5px;
+	}
+</style>
 <?php 
 // Include the code that contains shopping cart's functions.
 // Current session is detected in "cartFunctions.php, hence need not start session here.
+
+
+
+
+
 include_once("cartFunctions.php");
 include("header.php"); // Include the Page Layout header
 
@@ -44,10 +85,11 @@ if (isset($_SESSION["Cart"])) {
 		echo "<table class='table table-hover'>"; // Start of table
 		echo "<thread class='cart-header'>";
 		echo "<tr>";
-		echo "<th width='250px'>Item</th>";
-		echo "<th width='90px'>Price</th>";
-		echo "<th width='60px'>Quantity</th>";
-		echo "<th width='120px'>Total</th>";
+		echo "<th style='width:10%;'></th>";
+		echo "<th style='width:40%;'>Item</th>";
+		echo "<th style='width:20%;'>Price</th>";
+		echo "<th style='width:20%;'>Quantity</th>";
+		echo "<th style='width:10%;'>Total</th>";
 		echo "<th>&nbsp;</th>";
 		echo "</tr>";
 		echo "</thread>";
@@ -60,9 +102,30 @@ if (isset($_SESSION["Cart"])) {
 		$subTotalaDiscount=0;
 		echo "<tbody>"; // Start of table's body section
 		while ($row=$result->fetch_array()) {
-				echo "<tr>";
-				echo "<td style='width:50%'>$row[Name]<br/>";
-				echo "Product ID: $row[ProductID]</td>";
+				echo "<tr style='font-size:25px;'>";
+				echo "<td style='width:10%;'>";
+				$imgqry="SELECT ProductTitle,ProductImage FROM Product WHERE ProductID=?";
+				$imgstmt=$conn->prepare($imgqry);
+				$imgstmt->bind_param("i",$row["ProductID"]);
+				$imgstmt->execute();
+				$imgresult=$imgstmt->get_result();
+				$imgstmt->close();
+				$imgsrc="";
+				$imgname="";
+				while ($imgrow=$imgresult->fetch_array()) {
+					$imgname=$imgrow["ProductTitle"];
+					$imgsrc='Images/Products/'.$imgrow["ProductImage"];
+				}
+				echo "<img src='$imgsrc' alt='$imgsrc' style='width:100px;height:100px;'>";
+				echo "</td>";
+
+				echo "<td style='width:40%;'>$row[Name]<br/>";
+				echo "<form action='cartFunctions.php' method='post'>";
+				echo "<input type='hidden' name='action' value='remove' />";
+				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
+				echo "<input type='submit' class='button1' value='Remove item'/>";
+				echo "</form></td>";
+				//echo "Product ID: $row[ProductID]</td>";
 				$itemprice=$row["Price"];
 				
 				
@@ -80,15 +143,15 @@ if (isset($_SESSION["Cart"])) {
 				$formattedoldPrice=number_format($row["Price"],2);
 				$formattedPrice=number_format($itemprice,2);
 				if ($itemprice==$row["Price"]){
-					echo "<td>$formattedPrice</td>";
+					echo "<td style='font-size:20px;'>$$formattedPrice</td>";
 				}
 				else{
-					echo "<td><del>$formattedoldPrice</del><br/>$formattedPrice</td>";
+					echo "<td><del style='font-size:20px;'>$$formattedoldPrice</del><br/><b>$$formattedPrice</b></td>";
 				}
 				//echo "<td>$formattedPrice</td>";
-				echo "<td>";
+				echo "<td style='font-size:20px;'>";
 				echo "<form action='cartFunctions.php' method='post'>";
-				echo "<select name='quantity' onChange='this.form.submit()'>";
+				/*echo "<select name='quantity' onChange='this.form.submit()'>";
 				for ($i=1; $i<=100;$i++){
 					if ($i==$row["Quantity"]){
 						$selected="selected";
@@ -98,7 +161,8 @@ if (isset($_SESSION["Cart"])) {
 					}
 					echo "<option value='$i' $selected>$i</option>";
 				}
-				echo "</select>";
+				echo "</select>";*/
+				echo "<input type='number' name='quantity' style='width:55px;' onChange='this.form.submit()' value=$row[Quantity] min='0'>";
 				echo "<input type='hidden' name='action' value='update' />";
 				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
 				echo "</form>";
@@ -107,13 +171,13 @@ if (isset($_SESSION["Cart"])) {
 				$formattedTotal=number_format($totalprice,2);
 				//$formattedTotal=number_format($row["Total"],2);
 				echo "<td>S$$formattedTotal</td>";
-				echo "<td>";
+				/*echo "<td>";
 				echo "<form action='cartFunctions.php' method='post'>";
 				echo "<input type='hidden' name='action' value='remove' />";
 				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
 				echo "<input type='image' src='images/trash-can.png' title='Remove item' />";
 				echo "</form>";
-				echo "</td>";
+				echo "</td>";*/
 				echo "</tr>";
 			// To Do 6 (Practical 5):
 		    // Store the shopping cart items in session variable as an associate array
@@ -153,22 +217,30 @@ if (isset($_SESSION["Cart"])) {
 			$shippingCharge=2;
 		}
 
+		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
+		
+		
 		$discountedPrice=$subTotal-$subTotalaDiscount;
 		if ($discountedPrice!=0){
-			echo "<p style='text-align:right; font-size:15px'>Item Discount = -S$" . number_format($discountedPrice,2);
+			echo "<tr><td class='tblContent'>Item Discount: </td><td class='tblval'> -S$".number_format($discountedPrice,2)."</td></tr>";
 		}
-		
-
+		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount,2)."</td></tr>";
+		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($shippingCharge,2)."</td></tr>";
+		echo "<tr><td colspan='2' style='padding-top:10px;'";
+		echo "<form method='post' action='checkoutProcess.php' style='text-align:center;'>";
+		echo "<input type='submit' class='checkout-btn' value='CHECK OUT'/>";
+		echo "</form></td></tr>";
+			
+		echo "</table>";
+		/*
 		echo "<p style='text-align:right; font-size:20px'>
 		Subtotal = S$" . number_format($subTotalaDiscount,2);
 		$_SESSION["Total"]=round($subTotalaDiscount,2);	
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page
-		echo "<p style='text-align:right; font-size:18px'>
-		Shipping Charge = S$" . number_format($shippingCharge,2);
-		echo "<form method='post' action='checkoutProcess.php'>";
-		echo "<input type='image' style='float:right;' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'>";
-		echo "</form></p>";	
+		echo "<p style='text-align:right; font-size:20px'>
+		Shipping Charge = S$" . number_format($shippingCharge,2);*/
+		
 	}
 	else {
 		echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";
