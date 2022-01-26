@@ -137,7 +137,10 @@ if (isset($_SESSION["Cart"])) {
 				$itemresult=$stmt3->get_result();
 				$stmt3->close();
 				while ($itemrow=$itemresult->fetch_array()) {
-					$itemprice = $itemrow["OfferedPrice"];
+					if ($itemrow["OfferedPrice"]<$itemprice){
+						$itemprice = $itemrow["OfferedPrice"];
+					}
+					
 				}
 
 				$formattedoldPrice=number_format($row["Price"],2);
