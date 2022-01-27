@@ -1,0 +1,45 @@
+version: "3.8"
+
+# Based on
+# https://www.cloudreach.com/en/technical-blog/containerize-this-how-to-use-php-apache-mysql-within-docker-containers/
+# https://www.section.io/engineering-education/dockerized-php-apache-and-mysql-container-development-environment/
+
+services:
+  php-apache:
+    build: ./php-apache
+    networks:
+      - backend
+    ports:
+      - 8081:80
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - SQLHOST=mysql
+
+  mysql:
+    image: mariadb:10
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql_init:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - '8082:80'
+    restart: always
+    environment:
+        PMA_HOST: mysql
+    depends_on:
+        - mysql
+
+volumes:
+  db_data:
+
+networks:
+  backend:
