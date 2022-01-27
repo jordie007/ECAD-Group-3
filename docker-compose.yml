@@ -31,12 +31,14 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-        - '8082:80'
+      - '8082:80'
     restart: always
     environment:
         PMA_HOST: mysql
     depends_on:
         - mysql
+    networks:
+      - backend
 
 volumes:
   db_data:
