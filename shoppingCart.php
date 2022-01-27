@@ -53,6 +53,11 @@ if (! isset($_SESSION["ShopperID"])) { // Check if user logged in
 	exit;
 }
 
+if (isset($_SESSION["Error"])){
+	echo "<script>alert('$_SESSION[Error]')</script>";
+	unset($_SESSION["Error"]);
+}
+
 echo "<div id='myShopCart' style='margin:auto'>"; // Start a container
 if (isset($_SESSION["Cart"])) {
 	include_once("mysql_conn.php");
@@ -123,6 +128,7 @@ if (isset($_SESSION["Cart"])) {
 				echo "<form action='cartFunctions.php' method='post'>";
 				echo "<input type='hidden' name='action' value='remove' />";
 				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
+				echo "<input type='hidden' name='prod_quantity' value='$row[Quantity]' />";
 				echo "<input type='submit' class='button1' value='Remove item'/>";
 				echo "</form></td>";
 				//echo "Product ID: $row[ProductID]</td>";
@@ -165,8 +171,9 @@ if (isset($_SESSION["Cart"])) {
 					echo "<option value='$i' $selected>$i</option>";
 				}
 				echo "</select>";*/
-				echo "<input type='number' name='quantity' style='width:55px;' onChange='this.form.submit()' value=$row[Quantity] min='0'>";
+				echo "<input type='number' name='quantity' style='width:55px;' onChange='this.form.submit()' value=$row[Quantity] min='0' max='100'>";
 				echo "<input type='hidden' name='action' value='update' />";
+				echo "<input type='hidden' name='prod_quantity' value='$row[Quantity]' />";
 				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
 				echo "</form>";
 				echo "</td>";
@@ -223,11 +230,35 @@ if (isset($_SESSION["Cart"])) {
 		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
 		
 		
-		$discountedPrice=$subTotal-$subTotalaDiscount;
-		if ($discountedPrice!=0){
+		//$discountedPrice=$subTotal-$subTotalaDiscount;
+
+
+		/*if ($discountedPrice!=0){
 			echo "<tr><td class='tblContent'>Item Discount: </td><td class='tblval'> -S$".number_format($discountedPrice,2)."</td></tr>";
+		}*/
+
+
+
+
+		$dobqry="SELECT * from shopper WHERE ShopperID=?";
+		$dobstmt=$conn->prepare($dobqry);
+		$dobstmt->bind_param("i",$_SESSION['ShopperID']);
+		$dobstmt->execute();
+		$dobresult=$dobstmt->get_result();
+		$dobstmt->close();
+
+		if ($dobresult->num_rows>0){
+			$row=$dobresult->fetch_array();
+			$dob=$row["BirthDate"];
+			if (date('m-d')==date("m-d", strtotime($dob))){
+				$disc=$subTotalaDiscount*(5/100);
+				echo "<tr><td class='tblContent'>Birthday Discount (5%): </td><td class='tblval'> -S$".number_format($disc,2)."</td></tr>";
+			}
 		}
-		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount,2)."</td></tr>";
+		
+		
+		
+		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount-$disc,2)."</td></tr>";
 		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($shippingCharge,2)."</td></tr>";
 		echo "<tr><td colspan='2' style='padding-top:10px;'";
 		echo "<form method='post' action='checkoutProcess.php' style='text-align:center;'>";
