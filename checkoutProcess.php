@@ -45,10 +45,9 @@ if($_POST) //Post Data received from Shopping cart page.
 	
 	// To Do 1B: Compute Shipping charge - 
 	$_SESSION["ShipCharge"] = 2.00;
-	if($_POST["delivery"]=="Express"){
+	if($_SESSION["delivery"]=="Express"){
 		$_SESSION["ShipCharge"] = 5.00;
 	}
-	$_SESSION["delivery"] = $_POST["delivery"];
 	
 	//Data to be sent to PayPal
 	$padata = '&CURRENCYCODE='.urlencode($PayPalCurrencyCode).
@@ -196,7 +195,7 @@ if(isset($_GET["token"]) && isset($_GET["PayerID"]))
 			//          Get the Order ID and save it in session variable.
 			$qry = "INSERT INTO orderdata (ShipName, ShipAddress, ShipCountry, ShipEmail, ShopCartID, DeliveryMode) VALUES (?,?,?,?,?,?)";
 			$stmt = $conn->prepare($qry);
-			$stmt->bind_param("ssssis",$ShipName,$ShipAddress,$ShipCountry,$ShipEmail,$_SESSION["Cart"],$_POST["delivery"]);
+			$stmt->bind_param("ssssis",$ShipName,$ShipAddress,$ShipCountry,$ShipEmail,$_SESSION["Cart"],$_SESSION["delivery"]);
 			$stmt->execute();
 			$stmt->close();
 			$qry = "SELECT LAST_INSERT_ID() AS OrderID";
