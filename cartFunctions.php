@@ -8,6 +8,9 @@ if (isset($_POST['action'])) {
         case 'update':
             updateItem();
             break;
+		case 'shipping':
+			updateShipping();
+			break;
 		case 'remove':
             removeItem();
             break;
@@ -155,7 +158,6 @@ function updateItem() {
 	$_SESSION["NumCartItem"]=($_SESSION["NumCartItem"]-$cartQty)+$quantity;
 	exit;
 }
-/*
 function updateShipping() {
 	// Check if shopping cart exists 
 	if (! isset($_SESSION["Cart"])) {
@@ -163,20 +165,10 @@ function updateShipping() {
 		header ("Location: login.php");
 		exit;
 	}
-	$delType=$_POST['deliveryMethod'];
-	$subtotal=$_POST['subTotal']
-
-	// TO DO 2
-	// Write code to implement: if a user clicks on "Update" button, update the database
-	// and also the session variable for counting number of items in shopping cart.
-	$cartid=$_SESSION["Cart"];
-	$pid=$_POST["product_id"];
-	$quantity=$_POST["quantity"];
-	$_SESSION["Cart"]=''
+	$_SESSION['delivery']=$_POST['delivery'];
 	header("Location: shoppingCart.php");
 	exit;
 }
-*/
 function removeItem() {
 	if (! isset($_SESSION["Cart"])) {
 		// redirect to login page if the session variable cart is not set

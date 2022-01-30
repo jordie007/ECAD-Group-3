@@ -1,0 +1,16 @@
+body {
+    font-family : 'Ariel';
+    font-size : 14px;
+}
+
+.page-title {
+    font-size:24px; 
+	font-weight:bold;
+}
+
+.cart-header {
+	/*background-color: #0040FF;*/
+	background-color: #ffbb00;
+	color: white;
+}
+

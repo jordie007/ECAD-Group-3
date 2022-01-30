@@ -34,6 +34,8 @@
 		padding-bottom:5px;
 	}
 </style>
+
+
 <?php 
 // Include the code that contains shopping cart's functions.
 // Current session is detected in "cartFunctions.php, hence need not start session here.
@@ -201,32 +203,30 @@ if (isset($_SESSION["Cart"])) {
 		echo "</table>"; // End of table
 		echo "</div>"; // End of Bootstrap responsive table
 
-		/*echo "<form action='cartFunctions.php' method='post'>";
-		echo "<p style='text-align:right; font-size:20px'>
-		Delivery Method ";
-		echo "<select name='deliveryMethod'>";
-			echo "<option value='Normal'>Normal</option>";
-			echo "<option value='Express'>Express</option>";
-		echo "</select>";
-		echo "</p></form>";
-		$shippingCharge=0;
-		$selectedDel = $_POST['deliveryMethod'];  
-		if ($selectedDel=='Normal'){
-			if ($subTotal>=300){
-				$shippingCharge=20;
-			}
-			else{
-				$shippingCharge=30;
-			}
-		}*/
+		
+		echo "<form method='post' action='cartFunctions.php' name='deliveryForm'>";
+		echo "<div style='text-align:right'>
+			<input type='hidden' name='action' value='shipping' />
+			<label for='delivery' style='text-align:right; font-size:20px'>Delivery Mode: </label>
+			<select id='delivery' name='delivery' onchange='deliveryForm.submit();'>";
+		echo "<option value='Normal'>Normal Delivery ($2) - 1 working day</option>";
+		if (isset($_SESSION['delivery'])){
+			if($_SESSION['delivery'] != "Normal")
+				echo "<option value='Express' selected>Express Delivery ($5) - 2 hours</option>";
+			else echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>";
+		}
+		else echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+		echo "</select></div></form>";
+		
 		// To Do 4 (Practical 4): 
 		// Display the subtotal at the end of the shopping cart
 
-		$shippingCharge=0;
-		if ($subTotalaDiscount<50){
+		if ($_SESSION['delivery']=="Normal"){
 			$shippingCharge=2;
 		}
-
+		else{
+			$shippingCharge=5;
+		}
 		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
 		
 		
