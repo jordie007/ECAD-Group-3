@@ -247,6 +247,7 @@ if (isset($_SESSION["Cart"])) {
 		$dobresult=$dobstmt->get_result();
 		$dobstmt->close();
 
+		$disc = 0;
 		if ($dobresult->num_rows>0){
 			$row=$dobresult->fetch_array();
 			$dob=$row["BirthDate"];
