@@ -213,7 +213,10 @@ if (isset($_SESSION["Cart"])) {
 				echo "<option value='Express' selected>Express Delivery ($5) - 2 hours</option>";
 			else echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>";
 		}
-		else echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+		else {
+			$_SESSION['delivery'] = "Normal";
+			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+		}
 		echo "</select></div></form>";
 		
 		// To Do 4 (Practical 4): 
