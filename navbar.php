@@ -7,6 +7,8 @@ $content2 = "<li class='nav-item'>
 			 <li class='nav-item'>
 		     <a class='nav-link' href='login.php' style='color:black;'>Login</a></li>";
 
+ $numItemCart = 0;
+
 if(isset($_SESSION["ShopperName"])) { 
 	//To Do 1 (Practical 2) - 
     //Display a greeting message, Change Password and logout links 
@@ -18,9 +20,9 @@ if(isset($_SESSION["ShopperName"])) {
                  <a class='nav-link' href='logout.php' style='color:black;'>Logout</a></li>";
 	//To Do 2 (Practical 4) - 
     //Display number of item in cart
-	//if (isset($_SESSION["NumCartItem"])){
-    //   $content1 .= ", $_SESSION[NumCartItem] item(s) in shopping cart";
-    //}
+	if (isset($_SESSION["NumCartItem"])){
+        $numItemCart= $_SESSION['NumCartItem'];
+    }
 }
 ?>
 <!-- To Do 3 (Practical 1) - 
@@ -47,7 +49,7 @@ if(isset($_SESSION["ShopperName"])) {
                 <a class="nav-link" href="search.php" style="color:black;">Product Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="shoppingCart.php" style="color:black;">Shopping Cart: <?php echo $_SESSION["NumCartItem"]; ?></a>
+                <a class="nav-link" href="shoppingCart.php" style="color:black;">Shopping Cart: <?php echo $numItemCart; ?></a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

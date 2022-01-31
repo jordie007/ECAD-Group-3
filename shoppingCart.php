@@ -34,8 +34,6 @@
 		padding-bottom:5px;
 	}
 </style>
-
-
 <?php 
 // Include the code that contains shopping cart's functions.
 // Current session is detected in "cartFunctions.php, hence need not start session here.
