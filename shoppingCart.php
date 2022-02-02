@@ -14,11 +14,11 @@
 		height:40px;
 		padding:5px;
 		font-weight:800;
-		background-color:#FFA997;
+		background-color:#FFC36E;
 		border-radius:5px;
 	}
 	.checkout-btn:hover{
-		background-color:#C86651;
+		background-color:#FEAC38;
 		color:white;
 	}
 
@@ -33,6 +33,14 @@
 		padding-top: 5px;
 		padding-bottom:5px;
 	}
+
+	.selectDel{
+		height:25px;
+		background-color:#FFDEAF;
+	}
+
+
+
 </style>
 <?php 
 // Include the code that contains shopping cart's functions.
@@ -201,12 +209,46 @@ if (isset($_SESSION["Cart"])) {
 		echo "</table>"; // End of table
 		echo "</div>"; // End of Bootstrap responsive table
 
+		/*
 		
 		echo "<form method='post' action='cartFunctions.php' name='deliveryForm'>";
 		echo "<div style='text-align:right'>
 			<input type='hidden' name='action' value='shipping' />
 			<label for='delivery' style='text-align:right; font-size:20px'>Delivery Mode: </label>
-			<select id='delivery' name='delivery' onchange='deliveryForm.submit();'>";
+			<select id='delivery' class='selectDel' name='delivery' onchange='deliveryForm.submit();'>";
+		echo "<option value='Normal'>Normal Delivery ($2) - 1 working day</option>";
+		if (isset($_SESSION['delivery'])){
+			if($_SESSION['delivery'] != "Normal")
+				echo "<option value='Express' selected>Express Delivery ($5) - 2 hours</option>";
+			else echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>";
+		}
+		else {
+			$_SESSION['delivery'] = "Normal";
+			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+		}
+		echo "</select></div></form>";
+		*/
+		
+		
+		
+		
+		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
+		
+		
+		//$discountedPrice=$subTotal-$subTotalaDiscount;
+
+
+		/*if ($discountedPrice!=0){
+			echo "<tr><td class='tblContent'>Item Discount: </td><td class='tblval'> -S$".number_format($discountedPrice,2)."</td></tr>";
+		}*/
+
+		echo "<tr><td class='tblContent' style='vertical-align:middle;'>Delivery Mode: </td>";
+		echo "<td class='tblval'>";
+		
+		echo "<form method='post' action='cartFunctions.php' name='deliveryForm'>";
+		echo "<div style='text-align:right'>
+			<input type='hidden' name='action' value='shipping' />
+			<select class='selectDel' id='delivery' name='delivery' onchange='deliveryForm.submit();'>";
 		echo "<option value='Normal'>Normal Delivery ($2) - 1 working day</option>";
 		if (isset($_SESSION['delivery'])){
 			if($_SESSION['delivery'] != "Normal")
@@ -219,25 +261,7 @@ if (isset($_SESSION["Cart"])) {
 		}
 		echo "</select></div></form>";
 		
-		// To Do 4 (Practical 4): 
-		// Display the subtotal at the end of the shopping cart
-
-		if ($_SESSION['delivery']=="Normal"){
-			$shippingCharge=2;
-		}
-		else{
-			$shippingCharge=5;
-		}
-		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
-		
-		
-		//$discountedPrice=$subTotal-$subTotalaDiscount;
-
-
-		/*if ($discountedPrice!=0){
-			echo "<tr><td class='tblContent'>Item Discount: </td><td class='tblval'> -S$".number_format($discountedPrice,2)."</td></tr>";
-		}*/
-
+		echo "</td></tr>";
 
 
 
@@ -257,11 +281,23 @@ if (isset($_SESSION["Cart"])) {
 				echo "<tr><td class='tblContent'>Birthday Discount (5%): </td><td class='tblval'> -S$".number_format($disc,2)."</td></tr>";
 			}
 		}
-		
-		
+
+		if ($_SESSION['delivery']=="Normal"){
+			if ($subTotal-$disc>=50){
+				$shippingCharge=0;
+			}
+			else{
+				$shippingCharge=2;
+			}
+			
+		}
+		else{
+			$shippingCharge=5;
+		}
 		
 		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount-$disc,2)."</td></tr>";
 		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($shippingCharge,2)."</td></tr>";
+		echo "<tr><td colspan='2' style='font-size:15px;'>*shipping charge will be waived for normal delivery if subtotal amount is $50 or above</td></tr>";
 		echo "<tr><td colspan='2' style='padding-top:10px;'";
 		echo "<form method='post' action='checkoutProcess.php' style='text-align:center;'>";
 		echo "<input type='submit' class='checkout-btn' value='CHECK OUT'/>";
