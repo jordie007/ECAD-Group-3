@@ -14,9 +14,9 @@
 //when shopper has yet to login,
 $content1 = "Welcome Guest<br />";
 $content2 = "<li class='nav-item'>
-		     <a class='nav-link' href='/register.php' style='color:black;'>Sign Up</a></li>
+		     <a class='nav-link' href='$baseURI/register.php' style='color:black;'>Sign Up</a></li>
 			 <li class='nav-item'>
-		     <a class='nav-link' href='/login.php' style='color:black;'>Login</a></li>";
+		     <a class='nav-link' href='$baseURI/login.php' style='color:black;'>Login</a></li>";
 
  $numItemCart = 0;
 
