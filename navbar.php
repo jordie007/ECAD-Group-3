@@ -1,3 +1,14 @@
+<style>
+	.nav-link{
+		color:black;
+	}
+    .nav-link:hover{
+        color:white;
+    }
+
+</style>
+
+
 <?php
 //Display guest welcome message, Login and Registration links
 //when shopper has yet to login,
@@ -15,9 +26,9 @@ if(isset($_SESSION["ShopperName"])) {
     //after shopper has logged in.
 	$content1 = "Welcome <b>$_SESSION[ShopperName]</b>";
     $content2 = "<li class='nav-item'>
-                 <a class='nav-link' href='changePassword.php' style='color:black;'>Change Password</a></li>
+                 <a class='nav-link' href='changePassword.php'>Change Password</a></li>
                  <li class='nav-item'>
-                 <a class='nav-link' href='logout.php' style='color:black;'>Logout</a></li>";
+                 <a class='nav-link' href='logout.php'>Logout</a></li>";
 	//To Do 2 (Practical 4) -
     //Display number of item in cart
 	if (isset($_SESSION["NumCartItem"])){
@@ -43,13 +54,13 @@ if(isset($_SESSION["ShopperName"])) {
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/catalogue/category.php" style="color:black;">Product Categories</a>
+                <a class="nav-link" href="/category.php">Product Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/search.php" style="color:black;">Product Search</a>
+                <a class="nav-link" href="/search.php">Product Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/shoppingCart.php" style="color:black;">Shopping Cart: <?php echo $numItemCart; ?></a>
+                <a class="nav-link" href="/shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i>  <?php echo $numItemCart; ?></a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

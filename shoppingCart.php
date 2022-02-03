@@ -296,13 +296,18 @@ if (isset($_SESSION["Cart"])) {
 		}
 		
 		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount-$disc,2)."</td></tr>";
+		$_SESSION["SubTotal"] = round($subTotalaDiscount-$disc,2);
 		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($shippingCharge,2)."</td></tr>";
 		echo "<tr><td colspan='2' style='font-size:15px;'>*shipping charge will be waived for normal delivery if subtotal amount is $50 or above</td></tr>";
-		echo "<tr><td colspan='2' style='padding-top:10px;'";
+		/*echo "<tr><td colspan='2' style='padding-top:10px;'>";
 		echo "<form method='post' action='checkoutProcess.php' style='text-align:center;'>";
 		echo "<input type='submit' class='checkout-btn' value='CHECK OUT'/>";
+		echo "</td></tr>";*/
+		echo "<tr><td colspan='2' style='padding-top:10px;'>";
+		echo "<form method='post' action='checkoutProcess.php'>";
+		echo "<input type='image' style='float:right'
+					src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'>";
 		echo "</form></td></tr>";
-			
 		echo "</table>";
 		/*
 		echo "<p style='text-align:right; font-size:20px'>
