@@ -179,7 +179,7 @@ if (isset($_SESSION["Cart"])) {
 					echo "<option value='$i' $selected>$i</option>";
 				}
 				echo "</select>";*/
-				echo "<input type='number' name='quantity' style='width:55px;' onChange='this.form.submit()' value=$row[Quantity] min='0' max='100'>";
+				echo "<input type='number' name='quantity' style='width:55px;' onChange='this.form.submit()' value=$row[Quantity] min='0' max='30'>";
 				echo "<input type='hidden' name='action' value='update' />";
 				echo "<input type='hidden' name='prod_quantity' value='$row[Quantity]' />";
 				echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";

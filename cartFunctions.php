@@ -62,24 +62,24 @@ function addItem() {
 	if ($result->num_rows>0){
 		$rows=$result->fetch_array();
 		$cartQty=$rows["Quantity"];
-		$qry="UPDATE ShopCartItem SET Quantity=LEAST(Quantity+?,50)
+		$qry="UPDATE ShopCartItem SET Quantity=LEAST(Quantity+?,30)
 		WHERE ShopCartID=? AND ProductID=?";
 		$stmt=$conn->prepare($qry);
 		$stmt->bind_param("iii",$quantity,$_SESSION["Cart"],$pid);
 		$stmt->execute();
 		$stmt->close();
 		
-		if ($cartQty+$quantity>50){
-			$qtyAdded=50-$cartQty;
+		if ($cartQty+$quantity>30){
+			$qtyAdded=30-$cartQty;
 		}
 		else{
 			$qtyAdded=$quantity;
 		}
 	}
 	else{
-		if ($quantity>50){
-			$quantity=50;
-			$qtyAdded=50;
+		if ($quantity>30){
+			$quantity=30;
+			$qtyAdded=30;
 		}
 		else{
 			$qtyAdded=$quantity;
@@ -142,8 +142,8 @@ function updateItem() {
 	
 	
 
-	if ($quantity>50){
-		$_SESSION["Error"]="Unable to add more than 50 item of each product, please checkout and add the remaining quantity in another cart";
+	if ($quantity>30){
+		$_SESSION["Error"]="Unable to add more than 30 item of each product, please checkout and add the remaining quantity in another cart";
 		header("Location: shoppingCart.php");
 		exit;
 	}
