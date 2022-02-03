@@ -1,8 +1,6 @@
 <?php
 // Detect the current session
 session_start();
-// Include the Page Layout header
-include("header.php");
 
 
 
@@ -37,11 +35,8 @@ if ($result->num_rows>0){
 if ($loggedIn){
 	// Redirect to home page
 	header("Location: index.php");
-	exit;
+} else {
+	// Go back to login page but with an error msg
+	header("Location: login.php?error=true");
 }
-else{
-	echo "Invalid login credential";
-}
-// Include the Page Layout footer
-include("footer.php");
 ?>
