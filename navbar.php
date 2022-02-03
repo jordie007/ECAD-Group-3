@@ -26,9 +26,9 @@ if(isset($_SESSION["ShopperName"])) {
     //after shopper has logged in.
 	$content1 = "Welcome <b>$_SESSION[ShopperName]</b>";
     $content2 = "<li class='nav-item'>
-                 <a class='nav-link' href='changePassword.php'>Change Password</a></li>
+                 <a class='nav-link' href='$baseURI/changePassword.php'>Change Password</a></li>
                  <li class='nav-item'>
-                 <a class='nav-link' href='logout.php'>Logout</a></li>";
+                 <a class='nav-link' href='$baseURI/logout.php'>Logout</a></li>";
 	//To Do 2 (Practical 4) -
     //Display number of item in cart
 	if (isset($_SESSION["NumCartItem"])){
@@ -57,7 +57,7 @@ if(isset($_SESSION["ShopperName"])) {
                 <a class="nav-link" href="<?= $baseURI ?>/catalogue/category.php">Product Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= $baseURI ?>/search.php">Product Search</a>
+                <a class="nav-link" href="<?= $baseURI ?>/catalogue/search.php">Product Search</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= $baseURI ?>/shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i>  <?php echo $numItemCart; ?></a>
