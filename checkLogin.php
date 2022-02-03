@@ -2,7 +2,7 @@
 // Detect the current session
 session_start();
 // Include the Page Layout header
-include("header.php"); 
+include("header.php");
 
 
 
@@ -12,7 +12,7 @@ $pwd = $_POST["password"];
 
 // To Do 1 (Practical 2): Validate login credentials with database
 include_once("mysql_conn.php");
-$qry="SELECT * from shopper WHERE Email=?";
+$qry="SELECT * from Shopper WHERE Email=?";
 $stmt=$conn->prepare($qry);
 $stmt->bind_param("s",$email);
 $stmt->execute();
