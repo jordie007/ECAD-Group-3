@@ -11,7 +11,7 @@ background-position: center;min-height:50vh;">
 <p style="font-size: 5vw;
     font-weight: 900;  position: absolute;
   top: 50%;
-  transform: translateY(-50%);width:100%"> Welcome!<br/>Take a bite out of hunger</p>
+  transform: translateY(-50%);width:100%;color:#5c4300">Take a bite out of hunger</p>
 </div>
 <?php 
 // Include the Page Layout footer
