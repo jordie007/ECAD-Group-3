@@ -1,18 +1,18 @@
-﻿<?php 
+<?php
 session_start(); // Detect the current session
-include("header.php"); // Include the Page Layout header
+include("../header.php"); // Include the Page Layout header
 ?>
 <!-- Create a container, 90% width of viewport -->
 <div style='width:90%; margin:auto;'>
 
-<?php 
+<?php
 $pid=$_GET["pid"]; // Read Product ID from query string
 
 // Include the PHP file that establishes database connection handle: $conn
-include_once("mysql_conn.php"); 
-$qry = "SELECT * from product where ProductID=?";
+include_once("../mysql_conn.php");
+$qry = "SELECT * from Product where ProductID=?";
 $stmt = $conn->prepare($qry);
-$stmt->bind_param("i", $pid); 	// "i" - integer 
+$stmt->bind_param("i", $pid); 	// "i" - integer
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
@@ -31,7 +31,7 @@ while ($row = $result->fetch_array()) {
     echo "<p>$row[ProductDesc]</p>";
 
     $qry = "SELECT s.SpecName, ps.SpecVal FROM ProductSpec ps
-            INNER JOIN Specification s ON ps.SpecID=s.SpecID 
+            INNER JOIN Specification s ON ps.SpecID=s.SpecID
             WHERE ps.ProductID=? ORDER BY ps.Priority";
     $stmt = $conn->prepare($qry);
     $stmt->bind_param("i", $pid);
@@ -43,7 +43,7 @@ while ($row = $result->fetch_array()) {
     }
     echo "</div>";
 
-    $img = "./Images/products/$row[ProductImage]";
+    $img = "/Images/products/$row[ProductImage]";
     echo "<div class='col-sm-3' style='vertical-align:top; padding:5px'>";
     echo "<p><img src='$img'></p>";
 
@@ -67,5 +67,5 @@ while ($row = $result->fetch_array()) {
 
 $conn->close(); // Close database connnection
 echo "</div>"; // End of container
-include("footer.php"); // Include the Page Layout footer
+include("../footer.php"); // Include the Page Layout footer
 ?>
