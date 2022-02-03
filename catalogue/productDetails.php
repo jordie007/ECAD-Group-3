@@ -1,5 +1,7 @@
 <?php
 session_start(); // Detect the current session
+
+$baseURI = ".."; // override; base dir is in parent dir
 include("../header.php"); // Include the Page Layout header
 ?>
 <!-- Create a container, 90% width of viewport -->

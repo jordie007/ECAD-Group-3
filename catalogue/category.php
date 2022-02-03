@@ -14,7 +14,10 @@ session_start(); // Detect the current session
 }
 </style>
 
-<?php include("../header.php"); // Include the Page Layout header ?>
+<?php
+$baseURI = ".."; // override; base dir is in parent dir
+include("../header.php"); // Include the Page Layout header
+?>
 
 <!-- Create a container, 60% width of viewport -->
 <div style="width:60%; margin:auto;">

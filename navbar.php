@@ -54,13 +54,13 @@ if(isset($_SESSION["ShopperName"])) {
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/category.php">Product Categories</a>
+                <a class="nav-link" href="<?= $baseURI ?>/catalogue/category.php">Product Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/search.php">Product Search</a>
+                <a class="nav-link" href="<?= $baseURI ?>/search.php">Product Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i>  <?php echo $numItemCart; ?></a>
+                <a class="nav-link" href="<?= $baseURI ?>/shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i>  <?php echo $numItemCart; ?></a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

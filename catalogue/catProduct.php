@@ -18,6 +18,7 @@ include_once("../mysql_conn.php");
 </style>
 
 <?php
+$baseURI = ".."; // override; base dir is in parent dir
 include("../header.php"); // Include the Page Layout header
 ?>
 
