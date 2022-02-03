@@ -60,7 +60,7 @@ if(isset($_SESSION["ShopperName"])) {
                 <a class="nav-link" href="search.php">Product Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i><?php echo $numItemCart; ?></a>
+                <a class="nav-link" href="shoppingCart.php"><i class="fas fa fa-shopping-cart fa-lg"></i>  <?php echo $numItemCart; ?></a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

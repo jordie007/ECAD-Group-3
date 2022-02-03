@@ -58,7 +58,7 @@ while ($row = $result->fetch_array()) {
     echo "<input type='hidden' name='action' value='add' />";
     echo "<input type='hidden' name='product_id' value='$pid' />";
     echo "Quantity: <input type='number' name='quantity' value='1'
-            min='1' max='10' style='width:40px' required />";
+            min='1' max='30' style='width:40px' required />";
     echo "<button type='submit'>Add to Cart</button>";
     echo "</form>";
     echo "</div>";
