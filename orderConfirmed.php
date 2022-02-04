@@ -1,3 +1,19 @@
+<style>
+	.shop-btn{
+		background-color:#ffbb00;
+		text-decoration:none;
+		font-weight:bold;
+		float:right;
+		color:black;
+		padding:10px;
+		border-radius:10px;
+	}
+	.shop-btn:hover {
+		background-color: #5c4300;
+		text-decoration:none;
+		color:white;
+	}
+</style>
 <?php 
 session_start(); // Detect the current session
 include("header.php"); // Include the Page Layout header
@@ -42,7 +58,7 @@ if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESS
 	}
 	echo "</b><br>Grand Total: <b style='float:right'>$$_SESSION[total]</b></p> <hr style='border-color:#5c4300; width:100%;'>";
 	echo "<p>Thank you for your purchase.&nbsp;&nbsp;";
-	echo '<a href="index.php" style="background-color:#ffbb00;text-decoration:none;font-weight:bold;float:right;color:black;padding:10px;border-radius:10px">Continue shopping</a></p>';
+	echo '<a class="shop-btn" href="index.php" style="">Continue shopping</a></p>';
 	echo "</div></div>";
 } 
 else header("Location: index.php");
