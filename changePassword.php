@@ -57,17 +57,31 @@ function validateForm()
 // Process after user click the submit button
 if (isset($_POST["pwd1"])) {
 	// To Do 2: Read new password entered by user
-	// To Do 3: Hash the default password
+    $new_pwd = $_POST["pwd1"];
+
+	// To Do 3: Hashing the new password
+    $hashed_pwd = password_hash($new_pwd,PASSWORD_DEFAULT);
+
 	// To Do 4: Update the new password hash
     include_once("mysql_conn.php");
-	$shopperId = $_SESSION["ShopperID"];
-    $new_pwd = $_POST["pwd1"];
-    $hashed_pwd = password_hash($new_pwd,PASSWORD_DEFAULT);
-    $qry = "UPDATE Shopper SET Password=? WHERE ShopperID=?";
-    $stmt = $conn->prepare($qry);
-    $stmt->bind_param("si",$hashed_pwd,$shopperId);
-    $stmt->execute();
-    $stmt->close();
+    $currentShopperID = $_SESSION["ShopperID"];
+
+    // Locates specific shopper who requests for password change
+    $qry = "SELECT * FROM Shopper WHERE ShopperID = '$currentShopperID'";
+    $result = $conn->query($qry);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_array();
+        $shopperId = $row["ShopperID"];
+
+        // Updates the shopper's password
+        $qry = "UPDATE Shopper SET Password=? WHERE ShopperID=?";
+        $stmt = $conn->prepare($qry);
+        $stmt->bind_param("si",$hashed_pwd,$shopperId);
+        $stmt->execute();
+        $stmt->close();
+        echo "<h6 style='font-weight:bold;'>Your password has been changed successfully!</h6>";
+    }
 }
 ?>
 
