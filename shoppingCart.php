@@ -282,22 +282,23 @@ if (isset($_SESSION["Cart"])) {
 			}
 		}
 
+		//Compute Shipping Charge
 		if ($_SESSION['delivery']=="Normal"){
 			if ($subTotal-$disc>=50){
-				$shippingCharge=0;
+				$_SESSION['ShipCharge']=0;
 			}
 			else{
-				$shippingCharge=2;
+				$_SESSION['ShipCharge']=2.00;
 			}
 			
 		}
 		else{
-			$shippingCharge=5;
+			$_SESSION['ShipCharge']=5.00;
 		}
 		
 		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount-$disc,2)."</td></tr>";
 		$_SESSION["SubTotal"] = round($subTotalaDiscount-$disc,2);
-		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($shippingCharge,2)."</td></tr>";
+		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($_SESSION['ShipCharge'],2)."</td></tr>";
 		echo "<tr><td colspan='2' style='font-size:15px;'>*shipping charge will be waived for normal delivery if subtotal amount is $50 or above</td></tr>";
 		/*echo "<tr><td colspan='2' style='padding-top:10px;'>";
 		echo "<form method='post' action='checkoutProcess.php' style='text-align:center;'>";
