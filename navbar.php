@@ -26,7 +26,7 @@ if(isset($_SESSION["ShopperName"])) {
     //after shopper has logged in.
 	$content1 = "Welcome <b>$_SESSION[ShopperName]</b>";
     $content2 = "<li class='nav-item'>
-                 <a class='nav-link' href='$baseURI/changePassword.php'>Change Password</a></li>
+                 <a class='nav-link' href='$baseURI/updateProfile.php'>Update Profile</a></li>
                  <li class='nav-item'>
                  <a class='nav-link' href='$baseURI/logout.php'>Logout</a></li>";
 	//To Do 2 (Practical 4) -

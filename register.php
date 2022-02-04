@@ -24,7 +24,7 @@ function validateForm()
         else if (str.substr(0,1) != "6" &&
                  str.substr(0,1) != "8" &&
                  str.substr(0,1) != "9") {
-            alert("Phone nunmber in Singpaore should start with 6, 8 or 9.");
+            alert("Phone nunmber in Singapore should start with 6, 8 or 9.");
             return false;
         }
     }
@@ -44,26 +44,26 @@ function validateForm()
         <label class="col-sm-3 col-form-label" for="name">Name:</label>
         <div class="col-sm-9">
             <input class="form-control" name="name" id="name" 
-                   type="text" required /> (required)
+                   type="text" pattern="[a-zA-Z ]+" required />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="address">Address:</label>
         <div class="col-sm-9">
             <textarea class="form-control" name="address" id="address"
-                      cols="25" rows="4" ></textarea>
+                      cols="25" rows="4" required></textarea>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="country">Country:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="country" id="country" type="text" />
+            <input class="form-control" name="country" id="country" type="text" pattern="[a-zA-Z ]+" required/>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="phone">Phone:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="phone" id="phone" type="text" />
+            <input class="form-control" name="phone" id="phone" type="text" required/>
         </div>
     </div>
     <div class="form-group row">
@@ -71,23 +71,25 @@ function validateForm()
             Email Address:</label>
         <div class="col-sm-9">
             <input class="form-control" name="email" id="email" 
-                   type="email" required /> (required)
+                   type="email" required />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="password">
             Password:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="password" id="password" 
-                   type="password" required /> (required)
+            <input class="form-control" name="password" 
+            placeholder="Password should have at least 6 characters long." id="password" type="password"
+            pattern=".{6,}" required />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="password2">
             Retype Password:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="password2" id="password2" 
-                   type="password" required /> (required)
+            <input class="form-control" name="password2"
+            placeholder="Password should have at least 6 characters long." id="password2" type="password"
+            pattern=".{6,}" required />
         </div>
     </div>
     <div class="form-group row">       
