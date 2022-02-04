@@ -43,12 +43,6 @@ if($_POST) //Post Data received from Shopping cart page.
 		}
 	}
 	
-	// To Do 1B: Compute Shipping charge - 
-	$_SESSION["ShipCharge"] = 2.00;
-	if($_SESSION["delivery"]=="Express"){
-		$_SESSION["ShipCharge"] = 5.00;
-	}
-	
 	//Data to be sent to PayPal
 	$padata = '&CURRENCYCODE='.urlencode($PayPalCurrencyCode).
 			  '&PAYMENTACTION=Sale'.
