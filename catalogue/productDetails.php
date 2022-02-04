@@ -41,10 +41,21 @@ include("../header.php"); // Include the Page Layout header
             $stmt->execute();
             $result2 = $stmt->get_result();
             $stmt->close();
-            while ($row2 = $result2->fetch_array()) {
-                echo $row2["SpecName"] . ": " . $row2["SpecVal"] . "<br />";
-            }
             ?>
+            <h5 class="mb-3">Specification</h5>
+            <div>
+                <?php
+                while ($row2 = $result2->fetch_array()) {
+                ?>
+                    <div class="row">
+                        <p class="col-sm-3 mb-1"><?= $row2["SpecName"] ?></h5>
+                        <p class="col-sm-2 mb-1 font-weight-bold"><?= $row2["SpecVal"] ?></p>
+                    </div>
+
+                <?php
+                }
+                ?>
+            </div>
         </div>
         <div class='col-sm-3' style='vertical-align:top; padding:5px'>
             <p><img src='<?= $baseURI ?>/Images/products/<?= $row["ProductImage"] ?>'></p>
@@ -56,7 +67,7 @@ include("../header.php"); // Include the Page Layout header
                 <input type='hidden' name='action' value='add' />
                 <input type='hidden' name='product_id' value='$pid' />
                 Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
-                <button type='submit'>Add to Cart</button>
+                <button class="btn btn-success" type='submit'>Add to Cart</button>
             </form>
         </div>
     </div>
