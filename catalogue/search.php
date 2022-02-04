@@ -31,8 +31,8 @@ include("../header.php"); // Include the Page Layout header
 if (isset($_GET["keywords"]) && trim($_GET['keywords']) != "") {
     // To Do (DIY): Retrieve list of product records with "ProductTitle"
 	// contains the keyword entered by shopper, and display them in a table.
-	include_once("mysql_conn.php");
-    $qry = "SELECT * from product WHERE ProductTitle LIKE ? OR ProductDesc LIKE ?";
+	include_once("../mysql_conn.php");
+    $qry = "SELECT * from Product WHERE ProductTitle LIKE ? OR ProductDesc LIKE ?";
     $stmt = $conn->prepare($qry);
     $keyword = "%".trim($_GET['keywords'])."%";
     $stmt->bind_param("ss", $keyword, $keyword);
@@ -55,5 +55,5 @@ if (isset($_GET["keywords"]) && trim($_GET['keywords']) != "") {
 }
 
 echo "</div>"; // End of container
-include("footer.php"); // Include the Page Layout footer
+include("../footer.php"); // Include the Page Layout footer
 ?>

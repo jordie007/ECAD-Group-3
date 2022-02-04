@@ -47,9 +47,12 @@ include("../header.php"); // Include the Page Layout header
 
   // To Do:  Starting ....
   $cid = $_GET["cid"];
-  $qry = "SELECT p.ProductID,p.ProductTitle,p.ProductImage,p.Price,p.Quantity
+  $qry = "SELECT
+      p.ProductID, p.ProductTitle, p.ProductImage,
+      p.Price, p.Quantity
 		FROM CatProduct cp INNER JOIN Product p ON cp.ProductID = p.ProductID
-		WHERE cp.CategoryID=?";
+		WHERE cp.CategoryID=?
+    ORDER BY p.ProductTitle";
   $stmt = $conn->prepare($qry);
   $stmt->bind_param("i", $cid);
   $stmt->execute();
@@ -67,7 +70,7 @@ include("../header.php"); // Include the Page Layout header
     S$ $formattedPrice</span>";
     echo "</div>";
 
-    $img = "/Images/products/$row[ProductImage]";
+    $img = "$baseURI/Images/products/$row[ProductImage]";
     echo "<div class='col-md-3'>";
     echo "<img src='$img' class='img-fluid' style='max-height:100px;border-radius: 4vh'>";
     echo "</div>";

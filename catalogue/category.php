@@ -33,8 +33,7 @@ include("../header.php"); // Include the Page Layout header
 // Include the PHP file that establishes database connection handle: $conn
 include_once("../mysql_conn.php");
 
-// To Do:  Starting ....
-$qry = "SELECT * FROM Category";
+$qry = "SELECT * FROM Category ORDER BY CatName";
 $result = $conn->query($qry);
 while ($row = $result->fetch_array()) {
     $catproduct = "catProduct.php?cid=$row[CategoryID]";
@@ -44,7 +43,7 @@ while ($row = $result->fetch_array()) {
     echo "$row[CatDesc]";
     echo "</div>";
 
-    $img = "/Images/category/$row[CatImage]";
+    $img = "$baseURI/Images/category/$row[CatImage]";
     echo "<div class='col-md-4' >";
     echo "<img src='$img' style='position: relative;
             top: 50%;
