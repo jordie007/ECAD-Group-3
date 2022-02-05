@@ -14,8 +14,14 @@ if($_POST) //Post Data received from Shopping cart page.
 		if ($result->num_rows>0){
 			while($row = $result->fetch_array()) {
 				if ($item["quantity"] > $row["Quantity"]){
-					echo "Product $item[productId] : $item[name] is out of stock!<br />";
-					echo "Please return to <a href='shoppingCart.php'>shopping cart</a> to amend your purchase.<br />";
+					echo "<div class='col-lg-6' style='margin:auto;padding:0;border-radius:25px;box-shadow: 0px 0px 10px #C6C6C6;'>";
+					echo "<div style='font-weight:bold;background-color:#ffbb00;padding:20px;
+							border-top-left-radius:25px;border-top-right-radius:25px;text-align:center'>
+							<p style='color:red;font-size:2em;margin:auto'>Transaction Failed</p></div>";
+					echo "<div style='background-color:white;padding:20px;
+					border-bottom-left-radius:25px;border-bottom-right-radius:25px;'>Product $item[productId]: <b>$item[name]</b> is out of stock!<br />";
+					echo "Please return to <a href='shoppingCart.php'>shopping cart</a> to amend your purchase.";
+					echo "</div></div>";
 					include("footer.php");
 					exit;
 				}
