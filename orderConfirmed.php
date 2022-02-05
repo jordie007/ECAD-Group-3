@@ -14,11 +14,11 @@
 		color:white;
 	}
 </style>
-<?php 
+<?php
 session_start(); // Detect the current session
 include("header.php"); // Include the Page Layout header
 
-if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESSION["total"])) {	
+if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESSION["total"])) {
 	include_once("mysql_conn.php");
 	echo "<div class='col-lg-6' style='margin:auto;padding:0;border-radius:25px;box-shadow: 0px 0px 10px #C6C6C6;'>";
 	echo "<div style='font-weight:bold;background-color:#ffbb00;padding:20px;
@@ -26,9 +26,9 @@ if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESS
 	<p style='color:green;font-size:2em'>Checkout successful</p><p> Order Number: <b>$_SESSION[OrderID]</b></p></div>";
 	echo "<div style='background-color:white;padding:20px;
 	border-bottom-left-radius:25px;border-bottom-right-radius:25px;'><p style='text-align:center'><b style='font-size:1.25em;margin:0'>Order Summary</b><br>";
-	$qry = "SELECT sci.Name, sci.Quantity FROM shopcartitem sci 
-			INNER JOIN shopcart sc ON sci.ShopCartID = sc.ShopCartID 
-			INNER JOIN orderdata od ON od.ShopCartID=sc.ShopCartID 
+	$qry = "SELECT sci.Name, sci.Quantity FROM ShopCartItem sci
+			INNER JOIN shopcart sc ON sci.ShopCartID = sc.ShopCartID
+			INNER JOIN orderdata od ON od.ShopCartID=sc.ShopCartID
 			WHERE OrderID = $_SESSION[OrderID]";
 	$result = $conn->query($qry);
 	if ($result->num_rows > 0){
@@ -60,7 +60,7 @@ if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESS
 	echo "<p>Thank you for your purchase.&nbsp;&nbsp;";
 	echo '<a class="shop-btn" href="index.php" style="">Continue shopping</a></p>';
 	echo "</div></div>";
-} 
+}
 else header("Location: index.php");
 
 include("footer.php"); // Include the Page Layout footer

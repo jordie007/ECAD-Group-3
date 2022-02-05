@@ -137,7 +137,7 @@ if(isset($_GET["token"]) && isset($_GET["PayerID"]))
 		//                after successful checkout
 
 		foreach($_SESSION['Items'] as $key=>$item){
-			$qry = "UPDATE product SET Quantity = Quantity - ? WHERE ProductID = ?";
+			$qry = "UPDATE Product SET Quantity = Quantity - ? WHERE ProductID = ?";
 			$stmt = $conn->prepare($qry);
 			$stmt->bind_param("ii",$item["quantity"],$item["productId"]);
 			$stmt->execute();
@@ -148,7 +148,7 @@ if(isset($_GET["token"]) && isset($_GET["PayerID"]))
 		// To Do 2: Update shopcart table, close the shopping cart (OrderPlaced=1)
 		$total = $_SESSION["SubTotal"] + $_SESSION["Tax"] + $_SESSION["ShipCharge"];
 		$_SESSION["total"] = $total;
-		$qry = "UPDATE shopcart SET OrderPlaced=1, Quantity=?, SubTotal=?, ShipCharge=?, Tax=?, Total=? WHERE ShopCartID=?";
+		$qry = "UPDATE ShopCart SET OrderPlaced=1, Quantity=?, SubTotal=?, ShipCharge=?, Tax=?, Total=? WHERE ShopCartID=?";
 		$stmt = $conn->prepare($qry);
 		$stmt->bind_param("iddddi", $_SESSION["NumCartItem"],
 							$_SESSION["SubTotal"],$_SESSION["ShipCharge"],
@@ -193,7 +193,7 @@ if(isset($_GET["token"]) && isset($_GET["PayerID"]))
 
 			// To Do 3: Insert an Order record with shipping information
 			//          Get the Order ID and save it in session variable.
-			$qry = "INSERT INTO orderdata (ShipName, ShipAddress, ShipCountry, ShipEmail, ShopCartID, DeliveryMode) VALUES (?,?,?,?,?,?)";
+			$qry = "INSERT INTO OrderData (ShipName, ShipAddress, ShipCountry, ShipEmail, ShopCartID, DeliveryMode) VALUES (?,?,?,?,?,?)";
 			$stmt = $conn->prepare($qry);
 			$stmt->bind_param("ssssis",$ShipName,$ShipAddress,$ShipCountry,$ShipEmail,$_SESSION["Cart"],$_SESSION["delivery"]);
 			$stmt->execute();
