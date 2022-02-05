@@ -16,16 +16,17 @@ if (isset($_REQUEST["redirect"])) {
                     <span class="page-title">Member Login</span>
                 </div>
             </div>
+            <!-- TODO: RMv the default login cred -->
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="email">Email Address:</label>
                 <div class="col-sm-9">
-                    <input class="form-control" type="email" name="email" id="email" required />
+                    <input class="form-control" type="email" name="email" id="email" required value="ecader@np.edu.sg" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="password">Password:</label>
                 <div class="col-sm-9">
-                    <input class="form-control" type="password" name="password" id="password" required />
+                    <input class="form-control" type="password" name="password" id="password" required value="ecader" />
                 </div>
             </div>
             <div class="form-group row">

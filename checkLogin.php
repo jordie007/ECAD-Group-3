@@ -2,24 +2,25 @@
 // Detect the current session
 session_start();
 
-
-
 // Reading inputs entered in previous page
 $email = $_POST["email"];
 $pwd = $_POST["password"];
 
-// To Do 1 (Practical 2): Validate login credentials with database
 include_once("mysql_conn.php");
-$qry = "SELECT * from Shopper WHERE Email=?";
+
+// Password is raw plaintext in the sample db, therefore doing exact match work
+$qry = "SELECT * from Shopper
+WHERE Email=?
+AND Password=?";
 $stmt = $conn->prepare($qry);
-$stmt->bind_param("s", $email);
+$stmt->bind_param("ss", $email, $pwd);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
 $loggedIn = FALSE;
 if ($result->num_rows > 0) {
 	$row = $result->fetch_array();
-	$hashed_pwd = $row["Password"];
+
 	$_SESSION["ShopperName"] = $row["Name"];
 	$_SESSION["ShopperID"] = $row["ShopperID"];
 	$loggedIn = TRUE;
