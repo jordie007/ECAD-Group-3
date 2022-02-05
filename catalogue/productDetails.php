@@ -81,7 +81,7 @@ include("../header.php"); // Include the Page Layout header
 
             <form action='<?= $formAction ?>' method='post'>
                 <input type='hidden' name='action' value='add' />
-                <input type='hidden' name='product_id' value='$pid' />
+                <input type='hidden' name='product_id' value='<?=$pid?>' />
                 Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
                 <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
             </form>
