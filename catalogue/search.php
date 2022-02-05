@@ -57,9 +57,10 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
         } else {
             echo "<p><b>No available results</b></p>";
         }
-        // To Do (DIY): End of Code
     }
-
-    echo "</div>"; // End of container
-    include("../footer.php"); // Include the Page Layout footer
     ?>
+</div>
+
+<?php
+include("../footer.php"); // Include the Page Layout footer
+?>

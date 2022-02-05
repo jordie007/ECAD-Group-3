@@ -265,7 +265,7 @@ if (isset($_SESSION["Cart"])) {
 
 
 
-		$dobqry="SELECT * from shopper WHERE ShopperID=?";
+		$dobqry="SELECT * from Shopper WHERE ShopperID=?";
 		$dobstmt=$conn->prepare($dobqry);
 		$dobstmt->bind_param("i",$_SESSION['ShopperID']);
 		$dobstmt->execute();
