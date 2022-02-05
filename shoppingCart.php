@@ -1,3 +1,23 @@
+<?php
+// Include the code that contains shopping cart's functions.
+// Current session is detected in "cartFunctions.php, hence need not start session here.
+
+
+
+
+
+include_once("cartFunctions.php");
+
+
+
+if (! isset($_SESSION["ShopperID"])) { // Check if user logged in
+	// redirect to login page if the session variable shopperid is not set
+	header ("Location: login.php");
+	exit;
+}
+?>
+
+<!-- content starts here, after all headers set -->
 <style>
 	.button1{
 		border:none;
@@ -42,24 +62,10 @@
 
 
 </style>
-<?php 
-// Include the code that contains shopping cart's functions.
-// Current session is detected in "cartFunctions.php, hence need not start session here.
 
+<?php
 
-
-
-
-include_once("cartFunctions.php");
 include("header.php"); // Include the Page Layout header
-
-
-
-if (! isset($_SESSION["ShopperID"])) { // Check if user logged in 
-	// redirect to login page if the session variable shopperid is not set
-	header ("Location: login.php");
-	exit;
-}
 
 if (isset($_SESSION["Error"])){
 	echo "<script>alert('$_SESSION[Error]')</script>";
@@ -69,7 +75,7 @@ if (isset($_SESSION["Error"])){
 echo "<div id='myShopCart' style='margin:auto'>"; // Start a container
 if (isset($_SESSION["Cart"])) {
 	include_once("mysql_conn.php");
-	// To Do 1 (Practical 4): 
+	// To Do 1 (Practical 4):
 	// Retrieve from database and display shopping cart in a table
 	$qry="SELECT *,(Price*Quantity) AS Total FROM ShopCartItem WHERE ShopCartID=?";
 	$stmt=$conn->prepare($qry);
@@ -78,9 +84,9 @@ if (isset($_SESSION["Cart"])) {
 	$result=$stmt->get_result();
 	$stmt->close();
 
-	
+
 	if ($result->num_rows > 0) {
-		// To Do 2 (Practical 4): Format and display 
+		// To Do 2 (Practical 4): Format and display
 		// the page header and header row of shopping cart page
 		echo "<p class='page-title' style='text-align:center'>Shopping Cart</p>";
 		$quantity=0;
@@ -93,7 +99,7 @@ if (isset($_SESSION["Cart"])) {
 		while ($row2=$result2->fetch_array()) {
 			$quantity += $row2["Quantity"];
 		}
-		echo "<p class='page-title' style='text-align:center'>Number of items in cart: ".$quantity."</p>"; 
+		echo "<p class='page-title' style='text-align:center'>Number of items in cart: ".$quantity."</p>";
 		echo "<div class='table-responsive' >"; // Bootstrap responsive table
 		echo "<table class='table table-hover'>"; // Start of table
 		echo "<thread class='cart-header'>";
@@ -107,9 +113,9 @@ if (isset($_SESSION["Cart"])) {
 		echo "</tr>";
 		echo "</thread>";
 		// To Do 5 (Practical 5):
-		// Declare an array to store the shopping cart items in session variable 
-		$_SESSION["Items"]=array();	
-		// To Do 3 (Practical 4): 
+		// Declare an array to store the shopping cart items in session variable
+		$_SESSION["Items"]=array();
+		// To Do 3 (Practical 4):
 		// Display the shopping cart content
 		$subTotal = 0; // Declare a variable to compute subtotal before tax,discount,shipping
 		$subTotalaDiscount=0;
@@ -141,8 +147,8 @@ if (isset($_SESSION["Cart"])) {
 				echo "</form></td>";
 				//echo "Product ID: $row[ProductID]</td>";
 				$itemprice=$row["Price"];
-				
-				
+
+
 				//Get discounted price if any
 				$itemqry="SELECT OfferedPrice FROM Product WHERE ProductID=? AND Offered=1 AND NOW() BETWEEN Product.OfferStartDate AND Product.OfferEndDate";
 				$stmt3=$conn->prepare($itemqry);
@@ -154,7 +160,7 @@ if (isset($_SESSION["Cart"])) {
 					if ($itemrow["OfferedPrice"]<$itemprice){
 						$itemprice = $itemrow["OfferedPrice"];
 					}
-					
+
 				}
 
 				$formattedoldPrice=number_format($row["Price"],2);
@@ -200,7 +206,7 @@ if (isset($_SESSION["Cart"])) {
 			// To Do 6 (Practical 5):
 		    // Store the shopping cart items in session variable as an associate array
 			$_SESSION["Items"][]=array("productId"=>$row["ProductID"],
-			"name"=>$row["Name"],"price"=>$itemprice,"quantity"=>$row["Quantity"]);	
+			"name"=>$row["Name"],"price"=>$itemprice,"quantity"=>$row["Quantity"]);
 			// Accumulate the running sub-total
 			$subTotalaDiscount +=$totalprice;
 			$subTotal+=$row["Quantity"]*$row["Price"];
@@ -210,7 +216,7 @@ if (isset($_SESSION["Cart"])) {
 		echo "</div>"; // End of Bootstrap responsive table
 
 		/*
-		
+
 		echo "<form method='post' action='cartFunctions.php' name='deliveryForm'>";
 		echo "<div style='text-align:right'>
 			<input type='hidden' name='action' value='shipping' />
@@ -224,17 +230,17 @@ if (isset($_SESSION["Cart"])) {
 		}
 		else {
 			$_SESSION['delivery'] = "Normal";
-			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>";
 		}
 		echo "</select></div></form>";
 		*/
-		
-		
-		
-		
+
+
+
+
 		echo "<table style='float:right;margin-bottom:20px;font-size:20px;'>";
-		
-		
+
+
 		//$discountedPrice=$subTotal-$subTotalaDiscount;
 
 
@@ -244,7 +250,7 @@ if (isset($_SESSION["Cart"])) {
 
 		echo "<tr><td class='tblContent' style='vertical-align:middle;'>Delivery Mode: </td>";
 		echo "<td class='tblval'>";
-		
+
 		echo "<form method='post' action='cartFunctions.php' name='deliveryForm'>";
 		echo "<div style='text-align:right'>
 			<input type='hidden' name='action' value='shipping' />
@@ -257,10 +263,10 @@ if (isset($_SESSION["Cart"])) {
 		}
 		else {
 			$_SESSION['delivery'] = "Normal";
-			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>"; 
+			echo "<option value='Express'>Express Delivery ($5) - 2 hours</option>";
 		}
 		echo "</select></div></form>";
-		
+
 		echo "</td></tr>";
 
 
@@ -290,12 +296,12 @@ if (isset($_SESSION["Cart"])) {
 			else{
 				$_SESSION['ShipCharge']=2.00;
 			}
-			
+
 		}
 		else{
 			$_SESSION['ShipCharge']=5.00;
 		}
-		
+
 		echo "<tr><td class='tblContent'>Subtotal: </td><td class='tblval'>S$".number_format($subTotalaDiscount-$disc,2)."</td></tr>";
 		$_SESSION["SubTotal"] = round($subTotalaDiscount-$disc,2);
 		echo "<tr><td class='tblContent'>Shipping Charge: </td><td class='tblval'>S$".number_format($_SESSION['ShipCharge'],2)."</td></tr>";
@@ -313,12 +319,12 @@ if (isset($_SESSION["Cart"])) {
 		/*
 		echo "<p style='text-align:right; font-size:20px'>
 		Subtotal = S$" . number_format($subTotalaDiscount,2);
-		$_SESSION["Total"]=round($subTotalaDiscount,2);	
+		$_SESSION["Total"]=round($subTotalaDiscount,2);
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page
 		echo "<p style='text-align:right; font-size:20px'>
 		Shipping Charge = S$" . number_format($shippingCharge,2);*/
-		
+
 	}
 	else {
 		echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";
