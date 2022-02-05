@@ -4,6 +4,9 @@ class ProductCatalog {
     public $sqlRows;
     public $baseUri;
 
+    /**
+     * @param mixed $sqlRows SQL result
+     */
     function __construct($sqlRows, $baseUri = "..") {
         $this->sqlRows = $sqlRows;
         $this->baseUri = $baseUri;
@@ -56,7 +59,17 @@ class ProductCatalog {
                         <div class="card-body bg-transparent">
                             <h5 class="card-title"><?= $row["ProductTitle"] ?></h5>
                             <?php
-                            if ($row["OfferedPrice"] ?? false) {
+                            $isOffer = $row["OfferedPrice"] ?? false;
+                            if ($isOffer) {
+                                // check if the date is within range
+                                $start = strtotime($row["OfferStartDate"]);
+                                $end = strtotime($row["OfferEndDate"]);
+                                $now = time();
+                                // override
+                                $isOffer = $now >= $start && $now <= $end;
+                            }
+
+                            if ($isOffer) {
                                 $pctg = sprintf("-%.0f%%", ($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
 
                             ?>

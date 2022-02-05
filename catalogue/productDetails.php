@@ -74,7 +74,17 @@ include("../header.php"); // Include the Page Layout header
                 </div>
                 <div class="card-body bg-transparent">
                     <?php
-                    if ($row["OfferedPrice"] ?? false) {
+                    $isOffer = $row["OfferedPrice"] ?? false;
+                    if ($isOffer) {
+                        // check if the date is within range
+                        $start = strtotime($row["OfferStartDate"]);
+                        $end = strtotime($row["OfferEndDate"]);
+                        $now = time();
+                        // override
+                        $isOffer = $now >= $start && $now <= $end;
+                    }
+
+                    if ($isOffer) {
                         $pctg = sprintf("-%.0f%%", ($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
 
                     ?>
