@@ -61,6 +61,10 @@ include("../header.php"); // Include the Page Layout header
                 <?php
                 }
                 ?>
+                <div class="row">
+                    <p class="col-sm-3 mb-1">Stock left</h5>
+                    <p class="col-sm-2 mb-1 font-weight-bold"><?= $row["Quantity"] ?></p>
+                </div>
             </div>
         </div>
         <div class='col-sm-3' style='vertical-align:top; padding:5px'>
@@ -77,13 +81,18 @@ include("../header.php"); // Include the Page Layout header
                 $thisPage = urlencode($_SERVER["REQUEST_URI"]);
                 $formAction = "../login.php?redirect={$thisPage}";
             }
+
             ?>
 
             <form action='<?= $formAction ?>' method='post'>
                 <input type='hidden' name='action' value='add' />
                 <input type='hidden' name='product_id' value='$pid' />
-                Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
-                <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
+                Quantity: <input type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' style='width:40px' required />
+                <?php if ($row["Quantity"] <= 0) { ?>
+                    <button class="btn btn-danger my-2" type='submit' disabled>Out of stock</button>
+                <?php } else { ?>
+                    <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
+                <?php } ?>
             </form>
         </div>
     </div>
