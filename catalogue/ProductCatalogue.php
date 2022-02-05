@@ -33,7 +33,7 @@ class ProductCatalog {
         <div class="row">
             <?php
             while ($row = $this->sqlRows->fetch_array()) {
-                $product = "productDetails.php?pid=$row[ProductID]";
+                $product = $this->baseUri . "/productDetails.php?pid=$row[ProductID]";
                 $formattedPrice = number_format($row["Price"], 2);
 
                 $isOut = $row["Quantity"] <= 0;
