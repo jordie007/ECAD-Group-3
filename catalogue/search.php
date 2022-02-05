@@ -28,26 +28,68 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
                 <button class="btn btn-primary" type="submit">Search</button>
             </div>
         </div> <!-- End of 2nd row -->
+        <div class="form-check row">
+            <input class="form-check-input" data-toggle="collapse" data-target="#advancedSearch" type="checkbox" name="isAdvanced" id="flexCheckChecked">
+            <label class="form-check-label" data-toggle="collapse" data-target="#advancedSearch" for="flexCheckChecked">
+                Advanced search
+            </label>
+        </div>
+
+        <div class="collapse col-sm-8 mx-auto my-3" id="advancedSearch">
+            <label for="sweetness" class="col-sm-4 col-form-label row">Sweetness</label>
+            <div class="col-sm-6 row">
+                <input type="range" class="form-range w-100" min="0" max="5" value="3" id="sweetnessRange" oninput="sweetnessText.value=sweetnessRange.value">
+                <input id="sweetnessText" type='number' name='sweetness' value='3' min='0' max='5' oninput="sweetnessRange.value=sweetnessText.value" />
+            </div>
+
+            <label for="maxPrice" class="col-sm-4 col-form-label row">Max price</label>
+            <div class="col-sm-6 row">
+                <input id="maxPrice" type='number' name='maxPrice' value='10' />
+            </div>
+        </div>
     </form>
+
+
 
     <?php
     // The non-empty search keyword is sent to server
-    if ($query && $query != "") {
+    if (true) {
         include_once("../mysql_conn.php");
 
-        $qry = "SELECT * FROM Product
-        WHERE LOWER(ProductTitle) LIKE LOWER(?) OR ProductDesc LIKE LOWER(?)";
-        $stmt = $conn->prepare($qry);
+        $isAdvanced = $_REQUEST["isAdvanced"] ?? false;
 
-        $key = "%" . $query . "%";
-        $stmt->bind_param("ss", $key, $key);
+        $qry = "SELECT * FROM Product p
+        WHERE LOWER(ProductTitle) LIKE LOWER(?) OR ProductDesc LIKE LOWER(?)";
+
+        $stmt = null;
+
+        if ($isAdvanced) {
+            $sweetness = $_REQUEST["sweetness"] ?? null;
+            $maxPrice = $_REQUEST["maxPrice"] ?? 9999;
+
+            $qry = "SELECT * FROM Product p
+                    INNER JOIN ProductSpec ps ON p.ProductID = ps.ProductID AND ps.SpecID = 2
+                    WHERE (LOWER(ProductTitle) LIKE LOWER(?) OR ProductDesc LIKE LOWER(?))
+                    AND ps.SpecVal = ?
+                    AND (p.OfferedPrice <= ? OR p.Price <= ?)
+                    ";
+
+            $stmt = $conn->prepare($qry);
+
+            $key = "%" . $query . "%";
+            $stmt->bind_param("sssdd", $key, $key, $sweetness, $maxPrice, $maxPrice);
+        } else {
+            $stmt = $conn->prepare($qry);
+
+            $key = "%" . $query . "%";
+            $stmt->bind_param("ss", $key, $key);
+        }
+
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         if ($result->num_rows > 0) {
-            // Save user's info in session variables
-            $keyword =   $query;
-            echo "<p><b>Search results for $keyword</b></p>";
+            echo "<p><b>Search results for $query</b></p>";
 
             // Print product catalogue component
             (new ProductCatalog($result))->echoHtml();

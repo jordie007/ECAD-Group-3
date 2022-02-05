@@ -43,7 +43,7 @@ class ProductCatalog {
                     <a href="<?= $product ?>" class="card product h-100">
                         <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden " style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('../Images/products/<?= $row["ProductImage"] ?>');">
                             <?php if ($isOut) { ?>
-                                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                                <div class="mask w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6);">
                                     <div class="d-flex justify-content-center align-items-center h-100">
                                         <h1 class="text-white mb-0 font-weight-bold font-italic">OUT OF STOCK</h1>
                                     </div>
