@@ -40,15 +40,15 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
             <div class="d-flex py-2">
                 <label for="sweetness" class="col-sm-5 col-form-label">Sweetness (0 for any)</label>
                 <div class="col-sm-6">
-                    <input type="range" class="form-range w-100" min="0" max="5" value="<?= $_REQUEST["sweetness"] ?? 3 ?>" id="sweetnessRange" oninput="sweetnessText.value=sweetnessRange.value">
-                    <input class="form-control" id="sweetnessText" type='number' name='sweetness' value='<?= $_REQUEST["sweetness"] ?? 3 ?>' min='0' max='5' oninput="sweetnessRange.value=sweetnessText.value" />
+                    <input type="range" class="form-range w-100" min="0" max="5" step="0.5" value="<?= $_REQUEST["sweetness"] ?? 3 ?>" id="sweetnessRange" oninput="sweetnessText.value=sweetnessRange.value">
+                    <input class="form-control" id="sweetnessText" type='number' name='sweetness' value='<?= $_REQUEST["sweetness"] ?? 3 ?>' min='0' max='5' step="0.5" oninput="sweetnessRange.value=sweetnessText.value" />
                 </div>
             </div>
 
             <div class="d-flex py-2">
                 <label for="maxPrice" class="col-sm-5 col-form-label">Max price (S$)</label>
                 <div class="col-sm-6">
-                    <input class="form-control" id="maxPrice" min="0" step="0.5" type='number' name='maxPrice' placeholder="e.g. 15.50" value="<?= $_REQUEST["maxPrice"] ?? null ?>" />
+                    <input class="form-control" id="maxPrice" min="0" step="0.1" type='number' name='maxPrice' placeholder="e.g. 15.50" value="<?= $_REQUEST["maxPrice"] ?? null ?>" />
                 </div>
             </div>
         </div>
