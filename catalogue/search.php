@@ -12,18 +12,15 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
 ?>
 
 <!-- HTML Form to collect search keyword and submit it to the same page in server -->
-<div style="width:80%; margin:auto;">
+<div class="container">
     <!-- Container -->
-    <form name="frmSearch" method="get" action="">
-        <div class="form-group row">
-            <!-- 1st row -->
-            <div class="col-sm-9 offset-sm-3">
-                <span class="page-title">Product Search</span>
-            </div>
-        </div> <!-- End of 1st row -->
+    <div class="col-sm-9">
+        <span class="page-title">Product Search</span>
+    </div>
+    <form class="col-sm-8 mx-auto my-3" name="frmSearch" method="get" action="">
         <div class="form-group row">
             <!-- 2nd row -->
-            <label for="query" class="col-sm-3 col-form-label">Product Title:</label>
+            <label for="query" class="col-sm-3 col-form-label">Product Keyword</label>
             <div class="col-sm-6">
                 <input class="form-control" name="query" id="query" type="search" autofocus <?php if ($query) { ?>value="<?= $query ?>" <?php } ?> />
             </div>

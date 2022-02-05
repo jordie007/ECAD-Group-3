@@ -32,9 +32,7 @@ include("../header.php"); // Include the Page Layout header
   <?php
 
   $cid = $_GET["cid"];
-  $qry = "SELECT
-      p.ProductID, p.ProductTitle, p.ProductImage,
-      p.Price, p.Quantity
+  $qry = "SELECT *
 		FROM CatProduct cp INNER JOIN Product p ON cp.ProductID = p.ProductID
 		WHERE cp.CategoryID=?
     ORDER BY p.ProductTitle";

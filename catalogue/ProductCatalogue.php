@@ -40,8 +40,8 @@ class ProductCatalog {
             ?>
 
                 <div class="col-sm-6 col-md-4 col-lg-3 py-3">
-                    <a href="<?= $product ?>" class="card product">
-                        <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden flex-fill" style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('../Images/products/<?= $row["ProductImage"] ?>');">
+                    <a href="<?= $product ?>" class="card product h-100">
+                        <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden " style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('../Images/products/<?= $row["ProductImage"] ?>');">
                             <?php if ($isOut) { ?>
                                 <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
                                     <div class="d-flex justify-content-center align-items-center h-100">
@@ -52,7 +52,18 @@ class ProductCatalog {
                         </div>
                         <div class="card-body bg-transparent">
                             <h5 class="card-title"><?= $row["ProductTitle"] ?></h5>
-                            <p class="card-text">S$ <?= $formattedPrice ?></p>
+                            <?php
+                            if ($row["OfferedPrice"] ?? false) {
+                                $pctg = sprintf("-%.0f%%", ($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
+
+                            ?>
+                                <span class="badge badge-pill badge-primary"><?= $pctg ?></span>
+                                <p class="card-text font-weight-bold text-danger py-1 pr-1">
+                                    <span class="font-weight-normal text-muted" style="text-decoration: line-through;">S$ <?= $formattedPrice ?></span>
+                                    S$ <?= number_format($row["OfferedPrice"], 2) ?></p>
+                            <?php } else { ?>
+                                <p class="card-text font-weight-bold text-danger">S$ <?= $formattedPrice ?></p>
+                            <?php } ?>
                         </div>
                     </a>
                 </div>
