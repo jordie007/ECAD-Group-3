@@ -63,7 +63,7 @@ include("../header.php"); // Include the Page Layout header
             Price:<span style='font-weight:bold;color:red;'>
                 S$ <?= number_format($row["Price"], 2) ?></span>
 
-            <form action='$baseURI/cartFunctions.php' method='post'>
+            <form action='<?= $baseURI ?>/cartFunctions.php' method='post'>
                 <input type='hidden' name='action' value='add' />
                 <input type='hidden' name='product_id' value='$pid' />
                 Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
