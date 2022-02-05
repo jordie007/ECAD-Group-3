@@ -6,6 +6,7 @@ class ProductCatalog {
 
     function __construct($sqlRows, $baseUri = "..") {
         $this->sqlRows = $sqlRows;
+        $this->baseUri = $baseUri;
     }
 
     public static function echoStyle() {
@@ -33,7 +34,8 @@ class ProductCatalog {
         <div class="row">
             <?php
             while ($row = $this->sqlRows->fetch_array()) {
-                $product = $this->baseUri . "/productDetails.php?pid=$row[ProductID]";
+                $product = $this->baseUri == "." ? "./catalogue/" : "./";
+                $product .= "productDetails.php?pid=$row[ProductID]";
                 $formattedPrice = number_format($row["Price"], 2);
 
                 $isOut = $row["Quantity"] <= 0;
