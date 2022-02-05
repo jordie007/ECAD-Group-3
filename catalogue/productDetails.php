@@ -101,11 +101,15 @@ include("../header.php"); // Include the Page Layout header
                     <form action='<?= $formAction ?>' method='post'>
                         <input type='hidden' name='action' value='add' />
                         <input type='hidden' name='product_id' value='<?= $pid ?>' />
-                        Quantity: <input type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' style='width:40px' required />
+                        <div class="form-row">
+                            <label for="quantity" class=" col-form-label">Quantity</label>
+                            <div class="ml-auto">
+                                <input class="form-control" type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' required /></div>
+                        </div>
                         <?php if ($row["Quantity"] <= 0) { ?>
-                            <button class="btn btn-danger my-2" type='submit' disabled>Out of stock</button>
+                            <button class="btn btn-danger my-3 w-100" type='submit' disabled>Out of stock</button>
                         <?php } else { ?>
-                            <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
+                            <button class="btn btn-success my-3 w-100" type='submit'>Add to Cart</button>
                         <?php } ?>
                     </form>
                 </div>
