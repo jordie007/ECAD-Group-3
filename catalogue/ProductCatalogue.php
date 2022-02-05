@@ -21,7 +21,7 @@ class ProductCatalog {
             .product {
                 background-color: white;
                 color: inherit;
-                border-radius: 4vh;
+                border-radius: 4vh !important;
                 box-shadow: 0px 0px 10px #C6C6C6;
                 margin-bottom: 20px
             }
