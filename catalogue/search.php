@@ -53,7 +53,7 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
 
     <?php
     // The non-empty search keyword is sent to server
-    if (true) {
+    if (isset($query)) {
         include_once("../mysql_conn.php");
 
         $isAdvanced = $_REQUEST["isAdvanced"] ?? false;

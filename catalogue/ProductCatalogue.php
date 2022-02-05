@@ -2,8 +2,9 @@
 
 class ProductCatalog {
     public $sqlRows;
+    public $baseUri;
 
-    function __construct($sqlRows) {
+    function __construct($sqlRows, $baseUri = "..") {
         $this->sqlRows = $sqlRows;
     }
 
@@ -41,7 +42,7 @@ class ProductCatalog {
 
                 <div class="col-sm-6 col-md-4 col-lg-3 py-3">
                     <a href="<?= $product ?>" class="card product h-100">
-                        <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden " style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('../Images/products/<?= $row["ProductImage"] ?>');">
+                        <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden " style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('<?= $this->baseUri ?>/Images/products/<?= $row["ProductImage"] ?>');">
                             <?php if ($isOut) { ?>
                                 <div class="mask w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6);">
                                     <div class="d-flex justify-content-center align-items-center h-100">
@@ -60,7 +61,8 @@ class ProductCatalog {
                                 <span class="badge badge-pill badge-primary"><?= $pctg ?></span>
                                 <p class="card-text font-weight-bold text-danger py-1 pr-1">
                                     <span class="font-weight-normal text-muted" style="text-decoration: line-through;">S$ <?= $formattedPrice ?></span>
-                                    S$ <?= number_format($row["OfferedPrice"], 2) ?></p>
+                                    S$ <?= number_format($row["OfferedPrice"], 2) ?>
+                                </p>
                             <?php } else { ?>
                                 <p class="card-text font-weight-bold text-danger">S$ <?= $formattedPrice ?></p>
                             <?php } ?>
