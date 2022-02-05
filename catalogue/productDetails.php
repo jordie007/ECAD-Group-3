@@ -5,10 +5,10 @@ $baseURI = ".."; // override; base dir is in parent dir
 include("../header.php"); // Include the Page Layout header
 ?>
 <!-- Create a container, 90% width of viewport -->
-<div style='width:90%; margin:auto;'>
+<div class="col-sm-11 mx-auto">
 
     <?php
-    $pid = $_GET["pid"]; // Read Product ID from query string
+    $pid = $_GET["pid"] ?? null; // Read Product ID from query string
 
     // Include the PHP file that establishes database connection handle: $conn
     include_once("../mysql_conn.php");
@@ -21,6 +21,12 @@ include("../header.php"); // Include the Page Layout header
     $stmt->close();
 
     $row = $result->fetch_assoc();
+    if (!$row) {
+    ?>
+        <h4 class="text-danger">No product with the ID <?= $pid ?> was found.</h4>
+    <?php
+        exit;
+    }
     ?>
     <div class='row'>
         <div class='col-sm-12' style='padding:5px'>
@@ -63,11 +69,21 @@ include("../header.php"); // Include the Page Layout header
             Price:<span style='font-weight:bold;color:red;'>
                 S$ <?= number_format($row["Price"], 2) ?></span>
 
-            <form action='<?= $baseURI ?>/cartFunctions.php' method='post'>
+            <?php
+            $formAction = "$baseURI/cartFunctions.php";
+            // Check if user logged in
+            if (!isset($_SESSION["ShopperID"])) {
+                // redirect to login page if the session variable shopperid is not set
+                $thisPage = urlencode($_SERVER["REQUEST_URI"]);
+                $formAction = "../login.php?redirect={$thisPage}";
+            }
+            ?>
+
+            <form action='<?= $formAction ?>' method='post'>
                 <input type='hidden' name='action' value='add' />
                 <input type='hidden' name='product_id' value='$pid' />
                 Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
-                <button class="btn btn-success" type='submit'>Add to Cart</button>
+                <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
             </form>
         </div>
     </div>

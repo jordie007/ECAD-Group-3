@@ -33,13 +33,13 @@ if ($result->num_rows > 0) {
 }
 
 if ($loggedIn) {
+	// Redirect to home page
+	$loc = "index.php";
 	if (isset($_REQUEST["redirect"])) {
 		// Redirect to specified
-		header("Location: {$_REQUEST["redirect"]}");
-	} else {
-		// Redirect to home page
-		header("Location: index.php");
+		$loc = urldecode($_REQUEST['redirect']);
 	}
+	header("Location: $loc");
 } else {
 	// Go back to login page but with an error msg
 	$pageUri = "login.php?error=true";
