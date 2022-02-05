@@ -13,6 +13,8 @@ services:
       - 8081:80
     volumes:
       - ./src:/var/www/html
+    env_file:
+      - .env
     environment:
       - SQLHOST=mysql
 
