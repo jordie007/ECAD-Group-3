@@ -23,7 +23,7 @@ else {
             echo '
             <div style="width:80%; margin:auto;">
             
-                <form name="register" action="updateShopper.php" method="post" onsubmit="return validateForm()">
+                <form name="update" action="updateShopper.php" method="post" onsubmit="return validateForm()">
                     <div class="form-group row">
                         <div class="col-sm-9 offset-sm-3">
                             <span class="page-title">Update Profile</span>
@@ -77,22 +77,22 @@ else {
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="pwd1">
+                        <label class="col-sm-3 col-form-label" for="password">
                             Password:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="pwd1"
+                            <input class="form-control" name="password"
                             placeholder="New password should be at least 6 characters long."
-                            id="pwd1" type="password" pattern=".{6,}" />
+                            id="password" value="'.$row['Password'].'" type="password" pattern=".{6,}" />
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="pwd2">
+                        <label class="col-sm-3 col-form-label" for="password2">
                             Retype Password:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="pwd2"
+                            <input class="form-control" name="password2"
                             placeholder="New password should be at least 6 characters long."
-                            id="pwd2" type="password" pattern=".{6,}" />
+                            id="password2" value="'.$row['Password'].'" type="password" pattern=".{6,}" />
                         </div>
                     </div>
 
@@ -135,7 +135,7 @@ else {
 function validateForm()
 {
     // Check if password matched
-	if (document.update.pwd1.value != document.update.pwd2.value) {
+	if (document.update.password1.value != document.update.password2.value) {
  	    alert("Given passwords are not the same!");
         return false;   // cancel submission
     }

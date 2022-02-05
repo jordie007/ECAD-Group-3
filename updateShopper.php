@@ -8,8 +8,7 @@ $address = $_POST["address"];
 $country = $_POST["country"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
-$password = password_hash($_POST["password"],PASSWORD_DEFAULT);
-//Additional Requirement
+$password = $_POST["password"];
 $pwdqns = $_POST["pwdquestion"];
 $pwdans = $_POST["pwdanswer"];
 
