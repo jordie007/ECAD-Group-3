@@ -3,11 +3,15 @@ session_start();
 
 //Reads user's input from Register Page
 $name = $_POST["name"];
+$dateofbirth = $_POST["birthdate"];
 $address = $_POST["address"];
 $country = $_POST["country"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
 $password = password_hash($_POST["password"],PASSWORD_DEFAULT);
+//Additional Requirement
+$pwdqns = $_POST["pwdquestion"];
+$pwdans = $_POST["pwdanswer"];
 
 include_once("mysql_conn.php");
 
@@ -21,12 +25,12 @@ if ($dbresult->num_rows > 0) {
 }
 
 else  {
-    $qry = "INSERT INTO Shopper (Name, Address, Country, Phone, Email, Password)
-            VALUES (?, ?, ?, ?, ?, ?)";
+    $qry = "INSERT INTO Shopper (Name, BirthDate, Address, Country, Phone, Email, Password, PwdQuestion, PwdAnswer)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($qry);
 
-    // "ssssss" - 6 string parameters
-    $stmt->bind_param("ssssss", $name, $address, $country, $phone, $email, $password);
+    // "sssssssss" - 9 string parameters
+    $stmt->bind_param("sssssssss", $name, $dateofbirth, $address, $country, $phone, $email, $password, $pwdqns, $pwdans);
 
     if ($stmt->execute()) { // SQL Statement executed successfully 
         

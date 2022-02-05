@@ -3,11 +3,15 @@ session_start();
 
 //Reads user's input from Update Profile Page
 $name = $_POST["name"];
+$dateofbirth = $_POST["birthdate"];
 $address = $_POST["address"];
 $country = $_POST["country"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
 $password = password_hash($_POST["password"],PASSWORD_DEFAULT);
+//Additional Requirement
+$pwdqns = $_POST["pwdquestion"];
+$pwdans = $_POST["pwdanswer"];
 
 include_once("mysql_conn.php");
 
@@ -23,13 +27,13 @@ if ($dbresult->num_rows > 1) {
 else {
     $shopperID = $_SESSION["ShopperID"];
 
-    $qry = "UPDATE Shopper SET Name=?, Address=?, Country=?, 
-    Phone=?, Email=?, Password=? WHERE ShopperID=?";
+    $qry = "UPDATE Shopper SET Name=?, BirthDate=?, Address=?, Country=?, Phone=?,
+    Email=?, Password=?, PwdQuestion=?, PwdAnswer=? WHERE ShopperID=?";
     $stmt = $conn->prepare($qry);
     
-    // "ssssssi" - 7 string parameters
-    $stmt->bind_param("ssssssi", $name, $address, $country,
-    $phone, $email, $password, $shopperID);
+    // "sssssssssi" - 10 string parameters
+    $stmt->bind_param("sssssssssi", $name, $dateofbirth, $address, $country,
+    $phone, $email, $password, $pwdqns, $pwdans, $shopperID);
 
     if ($stmt->execute()) { // SQL Statement executed successfully 
         
