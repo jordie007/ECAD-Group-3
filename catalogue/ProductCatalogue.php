@@ -45,7 +45,7 @@ class ProductCatalog {
 
             ?>
 
-                <div class="col-sm-6 col-md-4 col-lg-3 py-3">
+                <div class="col-6 col-md-4 col-lg-3 py-3">
                     <a href="<?= $product ?>" class="card product h-100">
                         <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden " style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('<?= $this->baseUri ?>/Images/products/<?= $row["ProductImage"] ?>');">
                             <?php if ($isOut) { ?>
