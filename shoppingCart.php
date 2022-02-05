@@ -86,8 +86,6 @@ if (isset($_SESSION["Cart"])) {
 
 
 	if ($result->num_rows > 0) {
-		// To Do 2 (Practical 4): Format and display
-		// the page header and header row of shopping cart page
 		echo "<p class='page-title' style='text-align:center'>Shopping Cart</p>";
 		$quantity=0;
 		$qry2="SELECT SUM(Quantity) AS 'Quantity' FROM ShopCartItem WHERE ShopCartID=?";
@@ -112,13 +110,9 @@ if (isset($_SESSION["Cart"])) {
 		echo "<th>&nbsp;</th>";
 		echo "</tr>";
 		echo "</thread>";
-		// To Do 5 (Practical 5):
-		// Declare an array to store the shopping cart items in session variable
 		$_SESSION["Items"]=array();
-		// To Do 3 (Practical 4):
-		// Display the shopping cart content
-		$subTotal = 0; // Declare a variable to compute subtotal before tax,discount,shipping
-		$subTotalaDiscount=0;
+		$subTotal = 0; //total price (not inc discount)
+		$subTotalaDiscount=0; //total price after discounts
 		echo "<tbody>"; // Start of table's body section
 		while ($row=$result->fetch_array()) {
 				echo "<tr style='font-size:25px;'>";
@@ -290,13 +284,12 @@ if (isset($_SESSION["Cart"])) {
 
 		//Compute Shipping Charge
 		if ($_SESSION['delivery']=="Normal"){
-			if ($subTotal-$disc>=50){
+			if ($subTotalaDiscount-$disc>=50){
 				$_SESSION['ShipCharge']=0;
 			}
 			else{
 				$_SESSION['ShipCharge']=2.00;
 			}
-
 		}
 		else{
 			$_SESSION['ShipCharge']=5.00;
