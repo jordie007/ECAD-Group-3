@@ -29,13 +29,13 @@ include("../header.php"); // Include the Page Layout header
     }
     ?>
     <div class='row'>
-        <div class='col-sm-12' style='padding:5px'>
+        <div class='col-sm-12 p-1'>
             <span class='page-title'><?= $row["ProductTitle"] ?></span>
         </div>
     </div>
 
     <div class='row'>
-        <div class='col-sm-9' style='padding:5px'>
+        <div class='col-sm-9 p-1'>
             <p><?= $row["ProductDesc"] ?></p>
 
             <?php
@@ -104,7 +104,8 @@ include("../header.php"); // Include the Page Layout header
                         <div class="form-row">
                             <label for="quantity" class=" col-form-label">Quantity</label>
                             <div class="ml-auto">
-                                <input class="form-control" type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' required /></div>
+                                <input class="form-control" type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' required />
+                            </div>
                         </div>
                         <?php if ($row["Quantity"] <= 0) { ?>
                             <button class="btn btn-danger my-3 w-100" type='submit' disabled>Out of stock</button>
@@ -118,7 +119,14 @@ include("../header.php"); // Include the Page Layout header
             </div>
 
         </div>
-        <div class='col-sm-3' style='vertical-align:top; padding:5px'>
+    </div>
+
+    <!-- TODO: Ranking feature goes here -->
+    <div class='row py-3'>
+        <div class='col-sm-12 p-1'>
+            <span class='page-title'>Reviews</span>
+        </div>
+        <div class='col-sm-9 p-1'>
 
         </div>
     </div>
