@@ -35,20 +35,20 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
             </label>
         </div>
 
-        <div class="col-sm-8 my-3" style="display:none" id="advancedSearch">
+        <div class="col-sm-9 my-3 mx-auto" style="display:none" id="advancedSearch">
 
             <div class="d-flex py-2">
-                <label for="sweetness" class="col-sm-4 col-form-label">Sweetness</label>
+                <label for="sweetness" class="col-sm-5 col-form-label">Sweetness (0 for any)</label>
                 <div class="col-sm-6">
-                    <input type="range" class="form-range w-100" min="0" max="5" value="3" id="sweetnessRange" oninput="sweetnessText.value=sweetnessRange.value">
-                    <input class="form-control" id="sweetnessText" type='number' name='sweetness' value='3' min='0' max='5' oninput="sweetnessRange.value=sweetnessText.value" />
+                    <input type="range" class="form-range w-100" min="0" max="5" value="<?= $_REQUEST["sweetness"] ?? 3 ?>" id="sweetnessRange" oninput="sweetnessText.value=sweetnessRange.value">
+                    <input class="form-control" id="sweetnessText" type='number' name='sweetness' value='<?= $_REQUEST["sweetness"] ?? 3 ?>' min='0' max='5' oninput="sweetnessRange.value=sweetnessText.value" />
                 </div>
             </div>
 
             <div class="d-flex py-2">
-                <label for="maxPrice" class="col-sm-4 col-form-label">Max price</label>
+                <label for="maxPrice" class="col-sm-5 col-form-label">Max price (S$)</label>
                 <div class="col-sm-6">
-                    <input class="form-control" id="maxPrice" type='number' name='maxPrice' value='10' />
+                    <input class="form-control" id="maxPrice" min="0" step="0.5" type='number' name='maxPrice' placeholder="e.g. 15.50" value="<?= $_REQUEST["maxPrice"] ?? null ?>" />
                 </div>
             </div>
         </div>
@@ -59,14 +59,6 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
     <?php
 
     $isAdvanced = $_REQUEST["isAdvanced"] ?? false;
-
-    if ($isAdvanced) {
-    ?>
-        <script>
-            $("#flexCheckChecked").show();
-        </script>
-    <?php
-    }
 
     // The non-empty search keyword is sent to server
     if (isset($query)) {
@@ -81,19 +73,39 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
 
         if ($isAdvanced) {
             $sweetness = $_REQUEST["sweetness"] ?? null;
-            $maxPrice = $_REQUEST["maxPrice"] ?? 9999;
+            $maxPrice = $_REQUEST["maxPrice"] ?? null;
 
-            $qry = "SELECT * FROM Product p
+            if ($sweetness == 0) {
+                // sweetness = 0 can be used to mean "Any" sweetness
+                $sweetness = null;
+            }
+
+            if (empty($maxPrice)) {
+                // set to a high value
+                $maxPrice = 99999;
+            }
+
+            if ($sweetness) {
+                $qry = "SELECT * FROM Product p
                     INNER JOIN ProductSpec ps ON p.ProductID = ps.ProductID AND ps.SpecID = 2
                     WHERE (LOWER(ProductTitle) LIKE LOWER(?) OR ProductDesc LIKE LOWER(?))
                     AND ps.SpecVal = ?
-                    AND (p.OfferedPrice <= ? OR p.Price <= ?)
-                    ";
+                    AND (p.OfferedPrice <= ? OR p.Price <= ?)";
 
-            $stmt = $conn->prepare($qry);
+                $stmt = $conn->prepare($qry);
 
-            $key = "%" . $query . "%";
-            $stmt->bind_param("sssdd", $key, $key, $sweetness, $maxPrice, $maxPrice);
+                $key = "%" . $query . "%";
+                $stmt->bind_param("sssdd", $key, $key, $sweetness, $maxPrice, $maxPrice);
+            } else {
+                $qry = "SELECT * FROM Product p
+                    WHERE (LOWER(ProductTitle) LIKE LOWER(?) OR ProductDesc LIKE LOWER(?))
+                    AND (p.OfferedPrice <= ? OR p.Price <= ?)";
+
+                $stmt = $conn->prepare($qry);
+
+                $key = "%" . $query . "%";
+                $stmt->bind_param("ssdd", $key, $key, $maxPrice, $maxPrice);
+            }
         } else {
             $stmt = $conn->prepare($qry);
 
@@ -114,8 +126,23 @@ $query = isset($_REQUEST["query"]) ? trim($_REQUEST["query"]) : null;
         }
     }
     ?>
-    </div>
+</div>
 
-        <?php
-        include("../footer.php"); // Include the Page Layout footer
-        ?>
+<?php
+if ($isAdvanced) {
+?>
+    <script type="text/javascript">
+        // On DOM rendered
+        $(function() {
+            // Check the box
+            $("#flexCheckChecked").prop("checked", true);
+            // Unhide the advanced search
+            $('#advancedSearch').show();
+        });
+    </script>
+<?php
+}
+
+include("../footer.php"); // Include the Page Layout footer
+
+?>
