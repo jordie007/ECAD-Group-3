@@ -43,13 +43,15 @@ else {
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="country">Country:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="country" id="country"  value= "'.$row['Country'].'" type="text" />
+                            <input class="form-control" name="country" id="country"  value= "'.$row['Country'].'" type="text"
+                             pattern="[a-zA-Z ]{4,}" title="Country should contain at least 4 letters" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="phone">Phone:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" name="phone" id="phone" value= "'.$row['Phone'].'" type="text" />
+                            <input class="form-control" name="phone" id="phone" value= "'.$row['Phone'].'" type="text"
+                             pattern="[689][0-9]{7}" title="Phone Number should start with 6, 8 or 9 and have exactly 8 digits." />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -101,20 +103,6 @@ function validateForm()
 	if (document.update.pwd1.value != document.update.pwd2.value) {
  	    alert("Given passwords are not the same!");
         return false;   // cancel submission
-    }
-
-    if (document.register.phone.value != "") {
-        var tele = document.register.phone.value;
-        if (tele.length != 8){
-            alert("Please enter a 8-digit phone number.");
-            return false;
-        }
-        else if (tele.substr(0,1) != "6" &&
-                 tele.substr(0,1) != "8" &&
-                 tele.substr(0,1) != "9") {
-            alert("A phone number in Singapore should start with either 6, 8 or 9.");
-            return false;
-        }
     }
 
     return true;
