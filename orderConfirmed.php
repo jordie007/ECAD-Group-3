@@ -27,8 +27,8 @@ if(isset($_SESSION["OrderID"]) and isset($_SESSION["delivery"]) and isset($_SESS
 	echo "<div style='background-color:white;padding:20px;
 	border-bottom-left-radius:25px;border-bottom-right-radius:25px;'><p style='text-align:center'><b style='font-size:1.25em;margin:0'>Order Summary</b><br>";
 	$qry = "SELECT sci.Name, sci.Quantity FROM ShopCartItem sci
-			INNER JOIN shopcart sc ON sci.ShopCartID = sc.ShopCartID
-			INNER JOIN orderdata od ON od.ShopCartID=sc.ShopCartID
+			INNER JOIN ShopCart sc ON sci.ShopCartID = sc.ShopCartID
+			INNER JOIN OrderData od ON od.ShopCartID=sc.ShopCartID
 			WHERE OrderID = $_SESSION[OrderID]";
 	$result = $conn->query($qry);
 	if ($result->num_rows > 0){
