@@ -61,30 +61,61 @@ include("../header.php"); // Include the Page Layout header
                 <?php
                 }
                 ?>
+                <div class="row">
+                    <p class="col-sm-3 mb-1">Stock left</h5>
+                    <p class="col-sm-2 mb-1 font-weight-bold"><?= $row["Quantity"] ?></p>
+                </div>
             </div>
         </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="bg-image m-2 text-center shadow-1-strong rounded-circle overflow-hidden flex-fill" style="aspect-ratio: 1 / 1;background-repeat: no-repeat;background-size:cover;background-image: url('../Images/products/<?= $row["ProductImage"] ?>');">
+
+                </div>
+                <div class="card-body bg-transparent">
+                    <?php
+                    if ($row["OfferedPrice"] ?? false) {
+                        $pctg = sprintf("-%.0f%%", ($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
+
+                    ?>
+                        <span class="badge badge-pill badge-primary"><?= $pctg ?></span>
+                        <p class="card-text font-weight-bold text-danger py-1 pr-1">
+                            <span class="font-weight-normal text-muted" style="text-decoration: line-through;">S$ <?= number_format($row["Price"], 2) ?></span>
+                            S$ <?= number_format($row["OfferedPrice"], 2) ?>
+                        </p>
+                    <?php } else { ?>
+                        <p class="card-text font-weight-bold text-danger">S$ <?= number_format($row["Price"], 2) ?></p>
+                    <?php } ?>
+
+                    <?php
+                    $formAction = "$baseURI/cartFunctions.php";
+                    // Check if user logged in
+                    if (!isset($_SESSION["ShopperID"])) {
+                        // redirect to login page if the session variable shopperid is not set
+                        $thisPage = urlencode($_SERVER["REQUEST_URI"]);
+                        $formAction = "../login.php?redirect={$thisPage}";
+                    }
+
+                    ?>
+
+                    <form action='<?= $formAction ?>' method='post'>
+                        <input type='hidden' name='action' value='add' />
+                        <input type='hidden' name='product_id' value='<?= $pid ?>' />
+                        Quantity: <input type='number' name='quantity' value='1' min='1' max='<?= min(30, $row["Quantity"]); ?>' style='width:40px' required />
+                        <?php if ($row["Quantity"] <= 0) { ?>
+                            <button class="btn btn-danger my-2" type='submit' disabled>Out of stock</button>
+                        <?php } else { ?>
+                            <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
+                        <?php } ?>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
         <div class='col-sm-3' style='vertical-align:top; padding:5px'>
-            <p><img src='<?= $baseURI ?>/Images/products/<?= $row["ProductImage"] ?>'></p>
 
-            Price:<span style='font-weight:bold;color:red;'>
-                S$ <?= number_format($row["Price"], 2) ?></span>
-
-            <?php
-            $formAction = "$baseURI/cartFunctions.php";
-            // Check if user logged in
-            if (!isset($_SESSION["ShopperID"])) {
-                // redirect to login page if the session variable shopperid is not set
-                $thisPage = urlencode($_SERVER["REQUEST_URI"]);
-                $formAction = "../login.php?redirect={$thisPage}";
-            }
-            ?>
-
-            <form action='<?= $formAction ?>' method='post'>
-                <input type='hidden' name='action' value='add' />
-                <input type='hidden' name='product_id' value='<?=$pid?>' />
-                Quantity: <input type='number' name='quantity' value='1' min='1' max='30' style='width:40px' required />
-                <button class="btn btn-success my-2" type='submit'>Add to Cart</button>
-            </form>
         </div>
     </div>
 </div>
