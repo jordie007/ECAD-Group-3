@@ -88,7 +88,7 @@ function validateForm()
         <label class="col-sm-3 col-form-label" for="password">
             Password:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="password" 
+            <input class="form-control" name="password" title="Password should be at least 6 characters long."
             placeholder="Password should be at least 6 characters long." id="password" type="password"
             pattern=".{6,}" required /> <p style="color:red;">(required)
         </div>
@@ -98,7 +98,7 @@ function validateForm()
         <label class="col-sm-3 col-form-label" for="password2">
             Retype Password:</label>
         <div class="col-sm-9">
-            <input class="form-control" name="password2"
+            <input class="form-control" name="password2" title="Password should be at least 6 characters long."
             placeholder="Password should be at least 6 characters long." id="password2" type="password"
             pattern=".{6,}" required /> <p style="color:red;">(required)
         </div>

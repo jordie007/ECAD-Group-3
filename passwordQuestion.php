@@ -36,7 +36,7 @@ else {
 
 				<div class="form-group row">       
 					<div class="col-sm-9 offset-sm-3">
-						<button id="loginBtn" type="submit">Submit Answer</button>
+						<button id="loginBtn" class="btn btn-secondary my-2" type="submit">Submit Answer</button>
 					</div>
 				</div>
 			</form>

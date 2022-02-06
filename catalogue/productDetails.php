@@ -124,20 +124,7 @@ include("../header.php"); // Include the Page Layout header
                         <?php } ?>
                     </form>
                 </div>
-
-
             </div>
-
-        </div>
-    </div>
-
-    <!-- TODO: Ranking feature goes here -->
-    <div class='row py-3'>
-        <div class='col-sm-12 p-1'>
-            <span class='page-title'>Reviews</span>
-        </div>
-        <div class='col-sm-9 p-1'>
-
         </div>
     </div>
 </div>

@@ -20,7 +20,8 @@ $dbresult = $conn->query($dbemail);
 
 // Checks if inputted email already exists in database 
 if ($dbresult->num_rows > 0) {
-    $Message = "<h3 style='color:red'>Email already exists in database! Please try again with another email!</h3>";
+    $Message = "<h3 style='color:red'>Email already exists in database! Please try again with another email!</h3> <br />
+    <h3><a href='register.php'>Try Again</a></h3>";
 }
 
 else  {

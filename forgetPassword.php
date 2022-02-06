@@ -20,7 +20,7 @@ include("header.php"); // Include the Page Layout header
 	</div>
 	<div class="form-group row">      
 		<div class="col-sm-9 offset-sm-3">
-			<button type="submit">Submit</button>
+			<button class="btn btn-secondary my-2" type="submit">Submit</button>
 		</div>
 	</div>
 </form>
