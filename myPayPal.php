@@ -7,9 +7,9 @@ $PayPalCurrencyCode = 'SGD'; 	//Paypal Currency Code
 
 $baseReturnURL = "http://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']);
 //URL to redirect to after PayPal has complete the online payment
-$PayPalReturnURL 	= $baseReturnURL . 'checkoutProcess.php';
+$PayPalReturnURL 	= $baseReturnURL . '/checkoutProcess.php';
 //URL to redirect to if user clicks cancel
-$PayPalCancelURL 	= $baseReturnURL . 'shoppingCart.php';
+$PayPalCancelURL 	= $baseReturnURL . '/shoppingCart.php';
 
 function PPHttpPost($methodName_, $nvpStr_, $PayPalApiUsername, $PayPalApiPassword,
                     $PayPalApiSignature, $PayPalMode) {
