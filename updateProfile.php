@@ -98,7 +98,7 @@ else {
 
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="pwdquestion">
-                            Select a Security Question:</label>
+                            Select a Verification Question:</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="pwdquestion" id="pwdquestion" readonly>
                                 <option value="'.$row['PwdQuestion'].'">'.$row['PwdQuestion'].'</option>
@@ -108,7 +108,7 @@ else {
 
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="pwdanswer">
-                            Security Answer:</label>
+                            Verification Answer:</label>
                         <div class="col-sm-9">
                             <input class="form-control" name="pwdanswer" id="pwdanswer" value="'.$row['PwdAnswer'].'" type="text" readonly />
                         </div>
